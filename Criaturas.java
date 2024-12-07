@@ -49,4 +49,23 @@ public class Criatura {
     public String toString() {
         return nombre + " (Tipo: " + tipo + ", Salud: " + salud + ", Ataque: " + ataque + ", Defensa: " + defensa + ", Habilidad: " + habilidad + ", Evoluciona a: " + evolucion + ")";
     }
+    public void atacar(Criatura objetivo) {
+    int daño = this.ataque - objetivo.getDefensa();
+        if (daño > 0) {
+            objetivo.recibirDaño(daño);
+            System.out.println(this.nombre + " ataca a " + objetivo.getNombre() + " causando " + daño + " de daño.");
+        } else {
+            System.out.println(this.nombre + " ataca a " + objetivo.getNombre() + " pero no causa daño.");
+        }
+    }
+
+    public void recibirDaño(int daño) {
+        this.salud -= daño;
+        if (this.salud < 0) {
+            this.salud = 0;
+        }
+        System.out.println(this.nombre + " ahora tiene " + this.salud + " de salud.");
+    }
+ 
+
 }
