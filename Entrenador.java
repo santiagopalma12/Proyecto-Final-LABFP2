@@ -32,4 +32,16 @@ public class Entrenador {
     public List<Criatura> getColeccion() {
         return coleccion;
     }
+    public void capturarCriatura(Criatura criatura) {
+    if (equipo.contains(criatura)) {
+        System.out.println("Esta criatura ya está en tu equipo.");
+        return;
+    }
+    if (equipo.size() < 3) {
+        equipo.add(criatura);
+    } else {
+        System.out.println("No puedes tener más de 3 criaturas en tu equipo.");
+    }
+}
+
 }
