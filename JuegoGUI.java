@@ -124,6 +124,19 @@ public class JuegoGUI extends JFrame {
                 .orElse(null);
     }
     
+    private void turnoEnemigo() {
+        if (enemigo.getSalud() < 40 && entrenadorRival.getPocionesCuracion() > 0) {
+            Random random = new Random();
+            int cantidad = random.nextInt(Math.min(3, entrenadorRival.getPocionesCuracion())) + 1; // Hasta 3 pociones o las que tenga disponibles
+            entrenadorRival.usarPocionCuracion(enemigo, cantidad);
+            textArea.append(enemigo.getNombre() + " usó " + cantidad + " pociones de curación. Salud actual: " + enemigo.getSalud() + "\n");
+        } else {
+            enemigo.atacar(criaturaSeleccionada);
+            textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
+        }
+    }
+    
+    
     private void usarPocionCuracion() {
         if (criaturaSeleccionada != null) {
             String cantidadStr = JOptionPane.showInputDialog(this, "¿Cuántas pociones deseas usar? (Máximo: " + entrenador1.getPocionesCuracion() + ")");
