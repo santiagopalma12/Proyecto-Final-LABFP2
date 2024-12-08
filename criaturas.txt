@@ -1,0 +1,101 @@
+Pikachu,100,40,20,Eléctrico,Impactrueno,Raichu,1
+Raichu,120,60,50,Eléctrico,Rayo,No evoluciona,0
+Charmander,120,50,30,Fuego,Lanzallamas,Charmeleon,1
+Charmeleon,150,60,40,Fuego,Puño Fuego,Charizard,2
+Charizard,180,80,60,Fuego/Volador,Garra Dragón,No evoluciona,0
+Squirtle,110,30,40,Agua,Hydro Pump,War Tortle,1
+War Tortle,130,40,50,Agua,Hydro Pump,Blastoise,2
+Blastoise,180,60,70,Agua,Hydro Bomba,No evoluciona,0
+Bulbasaur,130,35,35,Planta,Látigo Cepa,Ivysaur,1
+Ivysaur,140,55,60,Planta,Rayo Solar,Venusaur,2
+Venusaur,160,70,70,Planta,Bailarina Floral,No evoluciona,0
+Jigglypuff,90,25,20,Normal,Voz Arrulladora,Wigglytuff,1
+Geodude,140,45,50,Tierra,Terratemblor,Graveler,1
+Graveler,160,55,65,Tierra,Terratemblor,Golem,2
+Gastly,80,60,15,Fantasma,Bola Sombra,Gengar,1
+Gengar,100,80,25,Fantasma,Bola Sombra,No evoluciona,0
+Machop,150,55,40,Lucha,Puño Karate,Machoke,1
+Machoke,160,70,50,Lucha,Puño Karate,Machamp,2
+Machamp,180,80,60,Lucha,Puño Dynamic,No evoluciona,0
+Pidgey,70,20,15,Volador,Ataque Rápido,Pidgeotto,1
+Pidgeotto,100,50,40,Volador,Ataque Rápido,Pidgeot,2
+Pidgeot,140,70,60,Volador,Corte Aéreo,No evoluciona,0
+Abra,60,70,10,Psiquico,Psíquico,Kadabra,1
+Kadabra,80,80,15,Psiquico,Confusión,Alakazam,2
+Alakazam,90,90,20,Psiquico,Puño Fuego,No evoluciona,0
+Eevee,100,30,30,Normal,Bola Sombra,Vaporeon,1
+Vaporeon,130,65,60,Agua,Bomba Acuática,No evoluciona,0
+Jolteon,130,65,60,Eléctrico,Impactrueno,No evoluciona,0
+Flareon,130,65,60,Fuego,Lanzallamas,No evoluciona,0
+Magikarp,50,10,5,Agua,Salpicadura,Gyarados,1
+Gyarados,170,85,40,Agua,Hydro Pump,No evoluciona,0
+Onix,160,50,60,Tierra,Desarme,Steelix,1
+Mewtwo,190,100,50,Psiquico,Psíquico,No evoluciona,0
+Articuno,170,80,60,Hielo,Puño Hielo,No evoluciona,0
+Rattata,60,20,10,Normal,Mordisco,Raticate,1
+Raticate,80,40,35,Normal,Colmillo Rápido,No evoluciona,0
+Sandshrew,120,40,45,Tierra,Cavar,Sandslash,1
+Oddish,70,50,55,Planta,Látigo Cepa,Gloom,1
+Gloom,80,60,65,Planta,Bola Sombra,Vileplume,2
+Vileplume,100,70,70,Planta/Rayo Solar,No evoluciona,0
+Diglett,50,40,25,Tierra,Ataque Arena,Dugtrio,1
+Dugtrio,80,70,50,Tierra,Cavar,No evoluciona,0
+Psyduck,100,55,45,Agua,Psiquico,Golduck,1
+Golduck,140,70,60,Agua,Hydro Pump,No evoluciona,0
+Mankey,100,50,40,Lucha,Puño Karate,Primeape,1
+Primeape,130,70,50,Lucha,Golpe Furia,No evoluciona,0
+Growlithe,110,60,50,Fuego,Llamarada,Arcanine,1
+Arcanine,160,90,70,Fuego,Rugido,No evoluciona,0
+Poliwag,90,30,25,Agua,Chorro de Agua,Poliwhirl,1
+Poliwhirl,120,50,45,Agua,Puño Hielo,Poliwrath,2
+Poliwrath,180,70,80,Agua/Lucha,Terremoto,No evoluciona,0
+Farfetch'd,90,55,50,Normal,Corte,No evoluciona,0
+Krabby,100,50,70,Agua,Tenaza,Kingler,1
+Kingler,140,80,90,Agua,Martillazo,No evoluciona,0
+Voltorb,80,50,40,Eléctrico,Explosión,Electrode,1
+Electrode,100,80,60,Eléctrico,Impactrueno,No evoluciona,0
+Exeggcute,90,60,45,Planta,Bomba Huevo,Exeggutor,1
+Exeggutor,160,85,80,Planta/Psiquico,Rayo Solar,No evoluciona,0
+Cubone,100,40,60,Tierra,Hueso Palo,Marowak,1
+Marowak,130,60,80,Tierra,Lanzar Hueso,No evoluciona,0
+Hitmonlee,140,120,50,Lucha,Patada Alta,No evoluciona,0
+Hitmonchan,140,50,120,Lucha,Puño Fuego,No evoluciona,0
+Lickitung,150,60,75,Normal,Lamer,No evoluciona,0
+Koffing,90,40,65,Veneno,Gas Veneno,Weezing,1
+Weezing,130,60,85,Veneno,Humo Doble,No evoluciona,0
+Rhyhorn,140,60,75,Tierra/Roca,Golpe Cabeza,Rhydon,1
+Rhydon,160,85,100,Tierra/Roca,Terremoto,No evoluciona,0
+Chansey,250,20,80,Normal,Cura Natural,No evoluciona,0
+Tangela,100,60,80,Planta,Látigo Cepa,No evoluciona,0
+Kangaskhan,180,80,80,Normal,Golpe Cometa,No evoluciona,0
+Horsea,80,50,40,Agua,Chorro de Agua,Seadra,1
+Seadra,120,70,60,Agua,Hydro Pump,No evoluciona,0
+Goldeen,90,45,40,Agua,Pico Taladro,Seaking,1
+Seaking,130,65,60,Agua,Hydro Pump,No evoluciona,0
+Staryu,90,50,45,Agua,Burbuja Starmie,1
+Starmie,110,70,65,Agua/Psiquico,Rayo,No evoluciona,0
+Mr. Mime,110,65,65,Psiquico/Bicho,Barrera,No evoluciona,0
+Scyther,140,110,80,Bicho/Volador,Corte Filo,No evoluciona,0
+Jynx,130,50,75,Hielo/Psiquico,Rayo Hielo,No evoluciona,0
+Electabuzz,140,80,70,Eléctrico,Impactrueno,No evoluciona,0
+Magmar,140,90,80,Fuego,Pirotecnia,No evoluciona,0
+Pinsir,150,125,100,Bicho,Machada,No evoluciona,0
+Tauros,150,100,95,Normal,Embate,No evoluciona,0
+Lapras,180,85,85,Agua/Hielo,Rayo Hielo,No evoluciona,0
+Ditto,48,48,48,Normal,Transformación,No evoluciona,0
+Porygon,130,75,70,Normal,Conversion,No evoluciona,0
+Omanyte,90,40,55,Roca/Agua,Golpe Concha,Omastar,1
+Omastar,140,70,90,Roca/Agua,Hidro Bomba,No evoluciona,0
+Kabuto,80,60,55,Roca/Agua,Absorción,Kabutops,1
+Kabutops,140,85,100,Roca/Agua,Tajo Cortante,No evoluciona,0
+Aerodactyl,160,105,70,Roca/Volador,Garra Dragón,No evoluciona,0
+Snorlax,180,85,110,Normal,Descanso,No evoluciona,0
+Zapdos,170,125,90,Eléctrico/Volador,Trueno,No evoluciona,0
+Moltres,170,125,90,Fuego/Volador,Llamarada,No evoluciona,0
+Dratini,90,50,45,Dragón,Giro Dragón,Dragonair,1
+Dragonair,120,75,70,Dragón,Ventisca,Dragonite,2
+Dragonite,180,100,100,Dragón/Volador,Furia Dragón,No evoluciona,0
+Mew,100,100,100,Psiquico,Poder Oculto,No evoluciona,0
+Golem, 200, 120, 130, Roca/Tierra, Terremoto, No evoluciona, 0  
+Steelix, 150, 85, 200, Acero/Tierra, Cola Férrea, No evoluciona, 0  
+Sandslash, 150, 100, 120, Tierra, Cuchillada, No evoluciona, 0  
