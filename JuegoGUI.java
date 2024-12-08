@@ -123,7 +123,7 @@ public class JuegoGUI extends JFrame {
                         Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
                 .orElse(null);
     }
-    
+
     private void turnoEnemigo() {
         if (enemigo.getSalud() < 40 && entrenadorRival.getPocionesCuracion() > 0) {
             Random random = new Random();
@@ -275,13 +275,11 @@ private void atacar() {
                 seleccionarCriatura();
             }
         }
-
+        turnoEnemigo();
         actualizarTexto();
     }
-}
+}   
 
-
-    
     private void elegirCriaturaVencida() {
         if (criaturasVencidas.size() > 0) {
             String[] nombresCriaturas = new String[criaturasVencidas.size()];
