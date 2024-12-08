@@ -170,6 +170,88 @@ private void atacar() {
         actualizarTexto();
     }
 }
+private void elegirCriaturaVencida() {
+    if (criaturasVencidas.size() > 0) {
+        String[] nombresCriaturas = new String[criaturasVencidas.size()];
+        for (int i = 0; i < criaturasVencidas.size(); i++) {
+            nombresCriaturas[i] = criaturasVencidas.get(i).getNombre();
+        }
+
+        String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Selecciona una criatura vencida para añadir a tu equipo:",
+                "Elegir Criatura Vencida",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                nombresCriaturas,
+                nombresCriaturas[0]
+        );
+
+        if (seleccion != null) {
+            for (Criatura criatura : criaturasVencidas) {
+                if (criatura.getNombre().equals(seleccion)) {
+                    entrenador1.capturarCriatura(criatura);
+                    criaturasVencidas.remove(criatura);
+                    textArea.append("\n" + criatura.getNombre() + " se ha unido a tu equipo.\n");
+                    break;
+                }
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay criaturas vencidas para elegir.", "Atención", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+
+private void siguienteTurno() {
+    if (enemigo != null && criaturaSeleccionada != null) {
+        enemigo.atacar(criaturaSeleccionada);
+        textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
+
+        if (criaturaSeleccionada.getSalud() <= 0) {
+            textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado! Has perdido.\n");
+        }
+
+        actualizarTexto();
+    }
+}
+
+private void actualizarTexto() {
+    StringBuilder texto = new StringBuilder();
+    texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
+
+    for (Criatura c : entrenador1.getEquipo()) {
+        texto.append("- ").append(c.getNombre())
+              .append(" | Salud: ").append(c.getSalud())
+              .append(" | Ataque: ").append(c.getAtaque())
+              .append(" | Defensa: ").append(c.getDefensa())
+              .append("\n");
+    }
+
+    texto.append("\n=== Equipo de ").append(entrenadorRival.getNombre()).append(" ===\n");
+
+    for (Criatura c : entrenadorRival.getEquipo()) {
+        texto.append("- ").append(c.getNombre())
+              .append(" | Salud: ").append(c.getSalud())
+              .append(" | Ataque: ").append(c.getAtaque())
+              .append(" | Defensa: ").append(c.getDefensa())
+              .append("\n");
+    }
+
+    texto.append("\n=== Estado Actual ===\n");
+
+    if (criaturaSeleccionada != null) {
+        texto.append(">> Criatura seleccionada: ").append(criaturaSeleccionada.getNombre())
+              .append(" | Salud: ").append(criaturaSeleccionada.getSalud()).append("\n");
+    }
+
+    if (enemigo != null) {
+        texto.append(">> Enemigo: ").append(enemigo.getNombre())
+              .append(" | Salud: ").append(enemigo.getSalud()).append("\n");
+    }
+
+    textArea.setText(texto.toString());
+}
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
