@@ -6,6 +6,7 @@ public class Criatura {
     private String tipo;
     private String habilidad;
     private String evolucion;
+    private int saludMaxima;
     
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
