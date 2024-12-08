@@ -12,56 +12,61 @@ public class JuegoGUI extends JFrame {
     private Criatura criaturaSeleccionada;
     private Criatura enemigo;
     private JTextArea textArea;
-    private JButton btnAtacar, btnSeleccionarCriatura, btnSiguienteTurno, btnGuardarProgreso;
+    private JButton btnAtacar, btnSeleccionarCriatura, btnSiguienteTurno, btnGuardarProgreso, btnCapturarPokemon;
+
     private Entrenador entrenadorRival;
     private ArrayList<Criatura> criaturasVencidas = new ArrayList<>();
 
     public JuegoGUI() {
+        // Configuración inicial
         setTitle("Juego de Criaturas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
     
-        textArea = new JTextArea();  
+        textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
     
-        // Crear los botones de la interfaz
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
         btnAtacar = new JButton("Atacar");
         btnSiguienteTurno = new JButton("Siguiente Turno");
         btnGuardarProgreso = new JButton("Guardar Progreso");
+        btnCapturarPokemon = new JButton("Capturar Pokémon");
+        btnCapturarPokemon.setVisible(false);
     
         panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
         panelBotones.add(btnSiguienteTurno);
         panelBotones.add(btnGuardarProgreso);
+        panelBotones.add(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
+        JButton btnVerColeccion = new JButton("Ver Colección");
+        panelBotones.add(btnVerColeccion);
+        btnVerColeccion.addActionListener(e -> mostrarColeccion());
+
     
         // Inicializar entrenadores
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
     
-        // Cargar criaturas y asignar el equipo inicial
+        // Cargar criaturas y configurar el equipo inicial
         cargarCriaturasDesdeArchivo("criaturas.txt");
-        asignarEquipoInicial(); // Asignamos el equipo inicial
-        crearEntrenadorRival(); // Creamos el equipo rival
+        seleccionarEquipoInicial(); // Invocar el menú de selección
+        crearEntrenadorRival();
     
-        // Acciones de los botones
+        // Configurar acciones de botones
         btnSeleccionarCriatura.addActionListener(e -> seleccionarCriatura());
         btnAtacar.addActionListener(e -> atacar());
         btnSiguienteTurno.addActionListener(e -> siguienteTurno());
         btnGuardarProgreso.addActionListener(e -> guardarProgreso());
+        btnCapturarPokemon.addActionListener(e -> capturarPokemon());
     
-        JButton btnElegirCriaturaVencida = new JButton("Elegir Criatura Vencida");
-        panelBotones.add(btnElegirCriaturaVencida);
-        btnElegirCriaturaVencida.addActionListener(e -> elegirCriaturaVencida());
-    
-        // Ahora que todo está inicializado, podemos actualizar el texto
-        actualizarTexto(); // Ahora textArea ya está inicializado
+        actualizarTexto();
     }
+    
     
     private int parseIntSeguro(String valor) {
         try {
@@ -112,39 +117,6 @@ public class JuegoGUI extends JFrame {
                         Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
                 .orElse(null);
     }
-    private void evolucionarCriatura(Criatura criatura){
-      String evolucion = criatura.getEvolucion();
-        if (evolucion != null && !evolucion.isEmpty()) {
-        // Buscar la criatura evolucionada en el archivo
-         try (BufferedReader reader = new BufferedReader(new FileReader("criaturas.txt"))) {
-             String linea;
-             while ((linea = reader.readLine()) != null) {
-                 String[] datos = linea.split(",");
-                 if (datos[0].equalsIgnoreCase(evolucion)) {
-                     // Crear la nueva criatura
-                     Criatura evolucionada = new Criatura(
-                        datos[0],
-                        Integer.parseInt(datos[1]),
-                        Integer.parseInt(datos[2]),
-                        Integer.parseInt(datos[3]),
-                        datos[4],
-                        datos[5],
-                        datos[6]
-                    );
-                    // Reemplazar la criatura en el equipo
-                    entrenador1.getEquipo().remove(criatura);
-                    entrenador1.getEquipo().add(evolucionada);
-                    textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
-                    return;
-                 }
-             }
-         } catch (IOException e) {
-             JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
-         }
-     } else {
-        textArea.append(criatura.getNombre() + " no tiene evolución definida.\n");
-     }
-    }
     
     private void seleccionarCriatura() {
         if (entrenador1.getEquipo().size() > 0) {
@@ -167,9 +139,13 @@ public class JuegoGUI extends JFrame {
                 for (Criatura criatura : entrenador1.getEquipo()) {
                     if (criatura.getNombre().equals(seleccion)) {
                         criaturaSeleccionada = criatura;
+                        textArea.append("\nHas seleccionado a " + criatura.getNombre() + ".\n");
     
-                        // Seleccionar enemigo del equipo del rival
-                        enemigo = seleccionarEnemigoDelRival(criaturaSeleccionada);
+                        // Si no hay un enemigo seleccionado, selecciona el primero del equipo rival
+                        if (enemigo == null && !entrenadorRival.getEquipo().isEmpty()) {
+                            enemigo = entrenadorRival.getEquipo().get(0);
+                            textArea.append("El enemigo seleccionado es: " + enemigo.getNombre() + ".\n");
+                        }
                         actualizarTexto();
                         return;
                     }
@@ -177,47 +153,73 @@ public class JuegoGUI extends JFrame {
             }
         }
     }
+    
+    
 // Método para calcular el puntaje de una criatura
 private int calcularPuntajeCriatura(Criatura criatura) {
     // Calcula el puntaje basado en salud, ataque y defensa, ajusta la fórmula según sea necesario
     return criatura.getSalud() + criatura.getAtaque() + criatura.getDefensa();
 }
-
-   
+private void evolucionarCriatura(Criatura criatura) {
+    String evolucion = criatura.getEvolucion();
+    if (evolucion != null && !evolucion.isEmpty()) {
+        // Buscar la criatura evolucionada en el archivo
+        try (BufferedReader reader = new BufferedReader(new FileReader("criaturas.txt"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos[0].equalsIgnoreCase(evolucion)) {
+                    // Crear la nueva criatura
+                    Criatura evolucionada = new Criatura(
+                        datos[0],
+                        Integer.parseInt(datos[1]),
+                        Integer.parseInt(datos[2]),
+                        Integer.parseInt(datos[3]),
+                        datos[4],
+                        datos[5],
+                        datos[6]
+                    );
+                    // Reemplazar la criatura en el equipo
+                    entrenador1.getEquipo().remove(criatura);
+                    entrenador1.getEquipo().add(evolucionada);
+                    textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
+                    return;
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        textArea.append(criatura.getNombre() + " no tiene evolución definida.\n");
+    }
+}
 private void atacar() {
-        if (criaturaSeleccionada != null && enemigo != null) {
-        // El jugador ataca primero
+    if (criaturaSeleccionada != null && enemigo != null) {
         criaturaSeleccionada.atacar(enemigo);
         textArea.append("\n" + criaturaSeleccionada.getNombre() + " ataca a " + enemigo.getNombre() + "!\n");
 
-        // Si el enemigo es derrotado
         if (enemigo.getSalud() <= 0) {
             textArea.append(enemigo.getNombre() + " ha sido derrotado!\n");
+            criaturasVencidas.add(enemigo);
             entrenadorRival.getEquipo().remove(enemigo);
 
-            // Incrementar combates ganados y verificar evolución
-            criaturaSeleccionada.incrementarCombatesGanados();
-            if (criaturaSeleccionada.getCombatesGanados() >= 3) {
-                evolucionarCriatura(criaturaSeleccionada);
-            }
-
-            // Seleccionar próximo enemigo
             if (entrenadorRival.getEquipo().isEmpty()) {
                 textArea.append("¡Has ganado el combate! Todos los Pokémon enemigos han sido derrotados.\n");
                 enemigo = null;
+
+                // Mostrar el botón para capturar Pokémon
+                btnCapturarPokemon.setVisible(true);
                 return;
-            } else {
-                enemigo = entrenadorRival.getEquipo().get(0);
-                textArea.append("El próximo Pokémon enemigo es: " + enemigo.getNombre() + ".\n");
             }
+
+            enemigo = entrenadorRival.getEquipo().get(0);
+            textArea.append("El próximo Pokémon enemigo es: " + enemigo.getNombre() + ".\n");
         }
 
-        // Ataque del enemigo si no ha sido derrotado
         if (enemigo != null) {
             enemigo.atacar(criaturaSeleccionada);
             textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
 
-            // Verificar si la criatura seleccionada ha sido derrotada
             if (criaturaSeleccionada.getSalud() <= 0) {
                 textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado!.\n");
                 entrenador1.getEquipo().remove(criaturaSeleccionada);
@@ -236,6 +238,7 @@ private void atacar() {
         actualizarTexto();
     }
 }
+
 
     
     private void elegirCriaturaVencida() {
@@ -345,26 +348,146 @@ private void atacar() {
     
         return equipoEnemigo;
     }
-
-    private void asignarEquipoInicial() {
-        List<Criatura> iniciales = new ArrayList<>();
+    private void capturarPokemon() {
+        if (criaturasVencidas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay Pokémon vencidos para capturar.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
     
-        // Crear los Pokémon iniciales con los datos proporcionados
+        String[] nombresCriaturas = new String[criaturasVencidas.size()];
+        for (int i = 0; i < criaturasVencidas.size(); i++) {
+            nombresCriaturas[i] = criaturasVencidas.get(i).getNombre();
+        }
+    
+        String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Selecciona un Pokémon para capturar:",
+                "Capturar Pokémon",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                nombresCriaturas,
+                nombresCriaturas[0]
+        );
+    
+        if (seleccion != null) {
+            for (Criatura criatura : criaturasVencidas) {
+                if (criatura.getNombre().equals(seleccion)) {
+                    entrenador1.agregarAColeccion(criatura);
+                    criaturasVencidas.remove(criatura);
+                    textArea.append("\n" + criatura.getNombre() + " ha sido capturado y añadido a tu colección.\n");
+                    break;
+                }
+            }
+        }
+    
+        if (criaturasVencidas.isEmpty()) {
+            btnCapturarPokemon.setVisible(false);
+        }
+    
+        actualizarTexto();
+    }
+    private void mostrarColeccion() {
+        List<Criatura> coleccion = entrenador1.getColeccion();
+    
+        if (coleccion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tu colección está vacía.", "Colección", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    
+        StringBuilder sb = new StringBuilder("Tu colección de Pokémon:\n");
+        for (Criatura criatura : coleccion) {
+            sb.append("- ").append(criatura.getNombre())
+              .append(" | Salud: ").append(criatura.getSalud())
+              .append(" | Ataque: ").append(criatura.getAtaque())
+              .append(" | Defensa: ").append(criatura.getDefensa())
+              .append("\n");
+        }
+    
+        JOptionPane.showMessageDialog(this, sb.toString(), "Colección", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void seleccionarEquipoInicial() {
+        List<Criatura> coleccion = entrenador1.getColeccion();
+    
+        if (coleccion.size() < 3) {
+            JOptionPane.showMessageDialog(this, 
+                "Tu colección debe tener al menos 3 Pokémon para formar un equipo.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        List<Criatura> equipoSeleccionado = new ArrayList<>();
+        while (equipoSeleccionado.size() < 3) {
+            // Convertir la colección en un arreglo de nombres
+            String[] nombresCriaturas = coleccion.stream()
+                                                  .map(Criatura::getNombre)
+                                                  .toArray(String[]::new);
+    
+            String seleccion = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Selecciona un Pokémon para tu equipo:",
+                    "Seleccionar Pokémon",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    nombresCriaturas,
+                    nombresCriaturas[0]
+            );
+    
+            if (seleccion != null) {
+                // Buscar la criatura seleccionada
+                Criatura criaturaSeleccionada = coleccion.stream()
+                                                         .filter(c -> c.getNombre().equals(seleccion))
+                                                         .findFirst()
+                                                         .orElse(null);
+    
+                if (criaturaSeleccionada != null) {
+                    equipoSeleccionado.add(criaturaSeleccionada);
+                    coleccion.remove(criaturaSeleccionada);
+                    JOptionPane.showMessageDialog(this, 
+                        criaturaSeleccionada.getNombre() + " añadido al equipo.", 
+                        "Equipo", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+    
+        // Asignar el equipo al entrenador
+        entrenador1.setEquipo(equipoSeleccionado);
+    
+        JOptionPane.showMessageDialog(this, 
+            "Tu equipo inicial ha sido seleccionado con éxito:\n" + 
+            equipoSeleccionado.stream()
+                              .map(Criatura::getNombre)
+                              .reduce((a, b) -> a + ", " + b)
+                              .orElse(""),
+            "Equipo Inicial", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+       
+    private void asignarEquipoInicial() {
+        // Crear los Pokémon iniciales
+        List<Criatura> iniciales = new ArrayList<>();
         iniciales.add(new Criatura("Charmander", 120, 50, 10, "Fuego", "Lanzallamas", "Charmeleon"));
         iniciales.add(new Criatura("Squirtle", 110, 30, 10, "Agua", "Hydro Pump", "War Tortle"));
         iniciales.add(new Criatura("Bulbasaur", 130, 35, 10, "Planta", "Látigo Cepa", "Ivysaur"));
-        // Limpiar el equipo del jugador antes de asignar los iniciales
-        entrenador1.getEquipo().clear();
     
-        // Asignar los Pokémon iniciales al equipo del jugador
+        // Limpiar el equipo y la colección del jugador
+        entrenador1.getEquipo().clear();
+        entrenador1.getColeccion().clear();
+    
+        // Agregar los Pokémon iniciales al equipo y a la colección
         for (Criatura inicial : iniciales) {
             entrenador1.capturarCriatura(inicial);
+            entrenador1.agregarAColeccion(inicial);
         }
     
-        // Actualizar la interfaz con el equipo inicial
-        System.out.println("Se han asignado los Pokémon iniciales al equipo: Charmander, Squirtle y Bulbasaur.");
-        actualizarTexto();
+        textArea.append("Se ha configurado el equipo inicial:\n");
+        for (Criatura criatura : iniciales) {
+            textArea.append("- " + criatura.getNombre() + "\n");
+        }
     }
+    
            
 private void mostrarEquipo(List<Criatura> equipo) {
     for (Criatura c : equipo) {
