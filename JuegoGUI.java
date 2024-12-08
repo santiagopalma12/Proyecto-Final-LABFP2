@@ -112,6 +112,39 @@ public class JuegoGUI extends JFrame {
                         Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
                 .orElse(null);
     }
+    private void evolucionarCriatura(Criatura criatura){
+      String evolucion = criatura.getEvolucion();
+        if (evolucion != null && !evolucion.isEmpty()) {
+        // Buscar la criatura evolucionada en el archivo
+         try (BufferedReader reader = new BufferedReader(new FileReader("criaturas.txt"))) {
+             String linea;
+             while ((linea = reader.readLine()) != null) {
+                 String[] datos = linea.split(",");
+                 if (datos[0].equalsIgnoreCase(evolucion)) {
+                     // Crear la nueva criatura
+                     Criatura evolucionada = new Criatura(
+                        datos[0],
+                        Integer.parseInt(datos[1]),
+                        Integer.parseInt(datos[2]),
+                        Integer.parseInt(datos[3]),
+                        datos[4],
+                        datos[5],
+                        datos[6]
+                    );
+                    // Reemplazar la criatura en el equipo
+                    entrenador1.getEquipo().remove(criatura);
+                    entrenador1.getEquipo().add(evolucionada);
+                    textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
+                    return;
+                 }
+             }
+         } catch (IOException e) {
+             JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
+         }
+     } else {
+        textArea.append(criatura.getNombre() + " no tiene evolución definida.\n");
+     }
+    }
     
     private void seleccionarCriatura() {
         if (entrenador1.getEquipo().size() > 0) {
