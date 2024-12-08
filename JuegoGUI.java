@@ -327,4 +327,23 @@ private int obtenerOpcionValida() {
             game.setVisible(true);
         });
     }
+private void guardarProgreso() {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("progreso.dat"))) {
+        out.writeObject(entrenador1);  // Guardar el entrenador (y sus criaturas)
+        JOptionPane.showMessageDialog(this, "Progreso guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar el progreso", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void cargarProgreso() {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("progreso.dat"))) {
+        entrenador1 = (Entrenador) in.readObject();  // Cargar el objeto entrenador
+        JOptionPane.showMessageDialog(this, "Progreso cargado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        actualizarTexto(); // Refrescar la interfaz con los datos cargados
+    } catch (IOException | ClassNotFoundException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar el progreso", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 }
