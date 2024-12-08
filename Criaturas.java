@@ -9,6 +9,8 @@ public class Criatura {
     
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
+    // Nuevo atributo para almacenar los combates ganados
+    private int combatesGanados;
 
     // Constructor original
     public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion) {
