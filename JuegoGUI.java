@@ -152,40 +152,54 @@ private int calcularPuntajeCriatura(Criatura criatura) {
 
    
 private void atacar() {
-    if (criaturaSeleccionada != null && enemigo != null) {
+        if (criaturaSeleccionada != null && enemigo != null) {
         // El jugador ataca primero
         criaturaSeleccionada.atacar(enemigo);
         textArea.append("\n" + criaturaSeleccionada.getNombre() + " ataca a " + enemigo.getNombre() + "!\n");
 
-        // Si la salud del enemigo llega a 0
+        // Si el enemigo es derrotado
         if (enemigo.getSalud() <= 0) {
-            textArea.append(enemigo.getNombre() + " ha sido derrotado! Has ganado.\n");
-            criaturasVencidas.add(enemigo); // Añadir al historial de criaturas vencidas
-            enemigo = null; // Eliminar el enemigo actual
-            return;
-        }
+            textArea.append(enemigo.getNombre() + " ha sido derrotado!\n");
+            entrenadorRival.getEquipo().remove(enemigo);
 
-        // El enemigo ataca después
-        enemigo.atacar(criaturaSeleccionada);
-        textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
-
-        // Si la salud del jugador llega a 0
-        if (criaturaSeleccionada.getSalud() <= 0) {
-            textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado!.\n");
-            entrenador1.getEquipo().remove(criaturaSeleccionada); // Remover del equipo
-
-            // Comprobar si quedan Pokémon en el equipo
-            if (entrenador1.getEquipo().isEmpty()) {
-                textArea.append("¡Has perdido! No quedan más Pokémon en tu equipo.\n");
-            } else {
-                textArea.append("Elige otro Pokémon para continuar.\n");
-                seleccionarCriatura(); // Permitir al jugador elegir otro Pokémon
+            // Incrementar combates ganados y verificar evolución
+            criaturaSeleccionada.incrementarCombatesGanados();
+            if (criaturaSeleccionada.getCombatesGanados() >= 3) {
+                evolucionarCriatura(criaturaSeleccionada);
             }
 
-            criaturaSeleccionada = null; // Eliminar el Pokémon actual
+            // Seleccionar próximo enemigo
+            if (entrenadorRival.getEquipo().isEmpty()) {
+                textArea.append("¡Has ganado el combate! Todos los Pokémon enemigos han sido derrotados.\n");
+                enemigo = null;
+                return;
+            } else {
+                enemigo = entrenadorRival.getEquipo().get(0);
+                textArea.append("El próximo Pokémon enemigo es: " + enemigo.getNombre() + ".\n");
+            }
         }
 
-        // Actualizar la información del combate
+        // Ataque del enemigo si no ha sido derrotado
+        if (enemigo != null) {
+            enemigo.atacar(criaturaSeleccionada);
+            textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
+
+            // Verificar si la criatura seleccionada ha sido derrotada
+            if (criaturaSeleccionada.getSalud() <= 0) {
+                textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado!.\n");
+                entrenador1.getEquipo().remove(criaturaSeleccionada);
+
+                if (entrenador1.getEquipo().isEmpty()) {
+                    textArea.append("¡Has perdido! No quedan más Pokémon en tu equipo.\n");
+                    criaturaSeleccionada = null;
+                    return;
+                }
+
+                textArea.append("Elige otro Pokémon para continuar.\n");
+                seleccionarCriatura();
+            }
+        }
+
         actualizarTexto();
     }
 }
