@@ -34,6 +34,55 @@ public class JuegoGUI extends JFrame {
         panelBotones.add(btnSiguienteTurno);
         panelBotones.add(btnGuardarProgreso);
         add(panelBotones, BorderLayout.SOUTH);
+        entrenador1 = new Entrenador("Ash");
+        entrenadorRival = new Entrenador("Rival");
+    
+        // Cargar criaturas y asignar el equipo inicial
+        cargarCriaturasDesdeArchivo("criaturas.txt");
+        asignarEquipoInicial();
+        crearEntrenadorRival();
+    
+        // Acciones de los botones
+        btnSeleccionarCriatura.addActionListener(e -> seleccionarCriatura());
+        btnAtacar.addActionListener(e -> atacar());
+        btnSiguienteTurno.addActionListener(e -> siguienteTurno());
+        btnGuardarProgreso.addActionListener(e -> guardarProgreso());
+    }
+    private void cargarCriaturasDesdeArchivo(String archivo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String nombre = datos[0];
+                int salud = Integer.parseInt(datos[1]);
+                int ataque = Integer.parseInt(datos[2]);
+                int defensa = Integer.parseInt(datos[3]);
+                String tipo = datos[4];
+                String habilidad = datos[5];
+                String evolucion = datos[6];
+    
+                Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion);
+                entrenador1.agregarAColeccion(criatura);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void asignarEquipoInicial() {
+        List<Criatura> iniciales = new ArrayList<>();
+        iniciales.add(new Criatura("Charmander", 120, 50, 10, "Fuego", "Lanzallamas", "Charmeleon"));
+        iniciales.add(new Criatura("Squirtle", 110, 30, 10, "Agua", "Hydro Pump", "War Tortle"));
+        iniciales.add(new Criatura("Bulbasaur", 130, 35, 10, "Planta", "Látigo Cepa", "Ivysaur"));
+    
+        entrenador1.getEquipo().clear();
+        for (Criatura inicial : iniciales) {
+            entrenador1.capturarCriatura(inicial);
+        }
+    }
+
+    public void crearEntrenadorRival() {
+        entrenadorRival = new Entrenador("Rival");
     }
 
     public static void main(String[] args) {
