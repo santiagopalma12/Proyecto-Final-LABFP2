@@ -21,8 +21,14 @@ public class Criatura {
         this.tipo = tipo;
         this.habilidad = habilidad;
         this.evolucion = evolucion;
+        this.combatesGanados = 0; //Inicializamos en 0
     }
-
+    public int getCombatesGanados(){
+        return combatesGanados;
+    }
+    public void incrementarCombatesGanados(){
+        combatesGanados++;
+    }
     // Métodos getter y setter para los atributos
     public String getNombre() {
         return nombre;
