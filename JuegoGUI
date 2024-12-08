@@ -1,0 +1,38 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class JuegoGUI extends JFrame {
+    private JTextArea textArea;
+    private JButton btnSeleccionarCriatura, btnAtacar, btnSiguienteTurno, btnGuardarProgreso;
+
+    public JuegoGUI() {
+        setTitle("Juego de Criaturas");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel panelBotones = new JPanel();
+        btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
+        btnAtacar = new JButton("Atacar");
+        btnSiguienteTurno = new JButton("Siguiente Turno");
+        btnGuardarProgreso = new JButton("Guardar Progreso");
+
+        panelBotones.add(btnSeleccionarCriatura);
+        panelBotones.add(btnAtacar);
+        panelBotones.add(btnSiguienteTurno);
+        panelBotones.add(btnGuardarProgreso);
+        add(panelBotones, BorderLayout.SOUTH);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JuegoGUI game = new JuegoGUI();
+            game.setVisible(true);
+        });
+    }
+}
