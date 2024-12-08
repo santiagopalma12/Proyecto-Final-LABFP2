@@ -21,6 +21,10 @@ public class Criatura {
         this.habilidad = habilidad;
         this.evolucion = evolucion;
     }
+    public void curar(int puntos) {
+        this.salud = Math.min(salud + puntos, saludMaxima); // No puede exceder la salud máxima
+        System.out.println(nombre + " fue curado en " + puntos + " puntos. Salud actual: " + salud);
+    }
 
     // Métodos getter y setter para los atributos
     public String getNombre() {
