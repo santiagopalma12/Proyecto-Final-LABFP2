@@ -84,6 +84,92 @@ public class JuegoGUI extends JFrame {
     public void crearEntrenadorRival() {
         entrenadorRival = new Entrenador("Rival");
     }
+    private void seleccionarCriatura() {
+    if (entrenador1.getEquipo().size() > 0) {
+        String[] nombresCriaturas = new String[entrenador1.getEquipo().size()];
+        for (int i = 0; i < entrenador1.getEquipo().size(); i++) {
+            nombresCriaturas[i] = entrenador1.getEquipo().get(i).getNombre();
+        }
+
+        String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Selecciona tu criatura:",
+                "Seleccionar Criatura",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                nombresCriaturas,
+                nombresCriaturas[0]
+        );
+
+        if (seleccion != null) {
+            for (Criatura criatura : entrenador1.getEquipo()) {
+                if (criatura.getNombre().equals(seleccion)) {
+                    criaturaSeleccionada = criatura;
+                    enemigo = seleccionarEnemigoDelRival(criaturaSeleccionada);
+                    actualizarTexto();
+                    return;
+                }
+            }
+        }
+    }
+}
+
+private Criatura seleccionarEnemigoDelRival(Criatura criaturaSeleccionada) {
+    int puntajeCriaturaSeleccionada = calcularPuntajeCriatura(criaturaSeleccionada);
+
+    int rango = 25;
+    List<Criatura> candidatos = entrenadorRival.getEquipo().stream()
+            .filter(c -> Math.abs(calcularPuntajeCriatura(c) - puntajeCriaturaSeleccionada) <= rango)
+            .collect(Collectors.toList());
+
+    if (!candidatos.isEmpty()) {
+        Random random = new Random();
+        return candidatos.get(random.nextInt(candidatos.size()));
+    }
+
+    return entrenadorRival.getEquipo().stream()
+            .min((c1, c2) -> Integer.compare(
+                    Math.abs(calcularPuntajeCriatura(c1) - puntajeCriaturaSeleccionada),
+                    Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
+            .orElse(null);
+}
+
+private int calcularPuntajeCriatura(Criatura criatura) {
+    return criatura.getSalud() + criatura.getAtaque() + criatura.getDefensa();
+}
+
+private void atacar() {
+    if (criaturaSeleccionada != null && enemigo != null) {
+        criaturaSeleccionada.atacar(enemigo);
+        textArea.append("\n" + criaturaSeleccionada.getNombre() + " ataca a " + enemigo.getNombre() + "!\n");
+
+        if (enemigo.getSalud() <= 0) {
+            textArea.append(enemigo.getNombre() + " ha sido derrotado! Has ganado.\n");
+            criaturasVencidas.add(enemigo);
+            enemigo = null;
+            return;
+        }
+
+        enemigo.atacar(criaturaSeleccionada);
+        textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
+
+        if (criaturaSeleccionada.getSalud() <= 0) {
+            textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado!\n");
+            entrenador1.getEquipo().remove(criaturaSeleccionada);
+
+            if (entrenador1.getEquipo().isEmpty()) {
+                textArea.append("¡Has perdido! No quedan más Pokémon en tu equipo.\n");
+            } else {
+                textArea.append("Elige otro Pokémon para continuar.\n");
+                seleccionarCriatura();
+            }
+
+            criaturaSeleccionada = null;
+        }
+
+        actualizarTexto();
+    }
+}
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
