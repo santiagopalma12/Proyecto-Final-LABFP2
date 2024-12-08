@@ -13,6 +13,8 @@ public class JuegoGUI extends JFrame {
     private Criatura enemigo;
     private JTextArea textArea;
     private JButton btnAtacar, btnSeleccionarCriatura, btnSiguienteTurno, btnGuardarProgreso, btnCapturarPokemon;
+    private JButton btnPocionCuracion;
+
 
     private Entrenador entrenadorRival;
     private ArrayList<Criatura> criaturasVencidas = new ArrayList<>();
@@ -36,6 +38,10 @@ public class JuegoGUI extends JFrame {
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         btnCapturarPokemon.setVisible(false);
+        btnPocionCuracion = new JButton("Poción de Curación");
+        panelBotones.add(btnPocionCuracion);
+        btnPocionCuracion.addActionListener(e -> usarPocionCuracion());
+
     
         panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
@@ -116,6 +122,28 @@ public class JuegoGUI extends JFrame {
                         Math.abs(calcularPuntajeCriatura(c1) - puntajeCriaturaSeleccionada),
                         Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
                 .orElse(null);
+    }
+    
+    private void usarPocionCuracion() {
+        if (criaturaSeleccionada != null) {
+            String cantidadStr = JOptionPane.showInputDialog(this, "¿Cuántas pociones deseas usar? (Máximo: " + entrenador1.getPocionesCuracion() + ")");
+            int cantidad;
+            try {
+                cantidad = Integer.parseInt(cantidadStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Entrada inválida.");
+                return;
+            }
+    
+            if (cantidad > 0 && cantidad <= entrenador1.getPocionesCuracion()) {
+                entrenador1.usarPocionCuracion(criaturaSeleccionada, cantidad);
+                actualizarTexto();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cantidad inválida de pociones.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una criatura primero.");
+        }
     }
     
     private void seleccionarCriatura() {

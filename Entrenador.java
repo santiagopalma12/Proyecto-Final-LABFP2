@@ -47,7 +47,6 @@ public class Entrenador implements Serializable {
         return equipo;
     }
 
-
     public String getNombre() {
         return nombre;
     }
