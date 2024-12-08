@@ -251,6 +251,74 @@ private void actualizarTexto() {
 
     textArea.setText(texto.toString());
 }
+public void seleccionarYGenerarEquipos() {
+    System.out.println("Elige tu equipo (hasta 3 Pokémon):");
+    mostrarColeccion(entrenador1.getColeccion());
+
+    List<Criatura> equipoJugador = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+        int opcion = obtenerOpcionValida();
+        equipoJugador.add(entrenador1.getColeccion().get(opcion - 1));
+    }
+    entrenador1.setEquipo(equipoJugador);
+
+    List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
+    entrenadorRival.setEquipo(equipoEnemigo);
+
+    System.out.println("Tu equipo:");
+    mostrarEquipo(entrenador1.getEquipo());
+    System.out.println("\nEquipo enemigo:");
+    mostrarEquipo(entrenadorRival.getEquipo());
+}
+
+private List<Criatura> generarEquipoEmparejado(List<Criatura> coleccionRival, List<Criatura> equipoJugador) {
+    int promedioJugador = equipoJugador.stream()
+                                        .mapToInt(Criatura::getPuntaje)
+                                        .sum() / equipoJugador.size();
+
+    int rango = 10;
+    List<Criatura> posiblesEnemigos = coleccionRival.stream()
+        .filter(c -> Math.abs(c.getPuntaje() - promedioJugador) <= rango)
+        .collect(Collectors.toList());
+
+    List<Criatura> equipoEnemigo = new ArrayList<>();
+    Random random = new Random();
+    for (int i = 0; i < 3; i++) {
+        Criatura seleccionada = posiblesEnemigos.remove(random.nextInt(posiblesEnemigos.size()));
+        equipoEnemigo.add(seleccionada);
+    }
+
+    return equipoEnemigo;
+}
+
+private void mostrarColeccion(List<Criatura> coleccion) {
+    for (int i = 0; i < coleccion.size(); i++) {
+        Criatura c = coleccion.get(i);
+        System.out.printf("%d. %s (Puntuación: %d)\n", i + 1, c.getNombre(), c.getPuntaje());
+    }
+}
+
+private void mostrarEquipo(List<Criatura> equipo) {
+    for (Criatura c : equipo) {
+        System.out.printf("%s | Salud: %d | Ataque: %d | Defensa: %d | Puntuación: %d\n",
+                          c.getNombre(), c.getSalud(), c.getAtaque(), c.getDefensa(), c.getPuntaje());
+    }
+}
+
+private int obtenerOpcionValida() {
+    Scanner scanner = new Scanner(System.in);
+    int opcion;
+    do {
+        System.out.print("Ingresa el número de la criatura que quieres seleccionar: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Por favor, ingresa un número válido: ");
+            scanner.next();
+        }
+        opcion = scanner.nextInt();
+    } while (opcion < 1 || opcion > entrenador1.getColeccion().size());
+    return opcion;
+}
+
 
 
     public static void main(String[] args) {
