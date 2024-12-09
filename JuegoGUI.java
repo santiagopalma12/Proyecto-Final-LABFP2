@@ -12,15 +12,11 @@ public class JuegoGUI extends JFrame {
     private Criatura criaturaSeleccionada;
     private Criatura enemigo;
     private JTextArea textArea;
-    private JButton btnAtacar, btnSeleccionarCriatura, btnSiguienteTurno, btnGuardarProgreso, btnCapturarPokemon;
-    private JButton btnPocionCuracion;
-
-
+    private JButton btnAtacar, btnSeleccionarCriatura, btnGuardarProgreso, btnCapturarPokemon;
     private Entrenador entrenadorRival;
     private ArrayList<Criatura> criaturasVencidas = new ArrayList<>();
 
     public JuegoGUI() {
-        // Configuración inicial
         setTitle("Juego de Criaturas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,18 +30,12 @@ public class JuegoGUI extends JFrame {
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
         btnAtacar = new JButton("Atacar");
-        btnSiguienteTurno = new JButton("Siguiente Turno");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         btnCapturarPokemon.setVisible(false);
-        btnPocionCuracion = new JButton("Poción de Curación");
-        panelBotones.add(btnPocionCuracion);
-        btnPocionCuracion.addActionListener(e -> usarPocionCuracion());
-
     
         panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
-        panelBotones.add(btnSiguienteTurno);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
@@ -53,27 +43,21 @@ public class JuegoGUI extends JFrame {
         panelBotones.add(btnVerColeccion);
         btnVerColeccion.addActionListener(e -> mostrarColeccion());
 
-    
-        // Inicializar entrenadores
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
     
-        // Cargar criaturas y configurar el equipo inicial
         cargarCriaturasDesdeArchivo("criaturas.txt");
         seleccionarEquipoInicial(); // Invocar el menú de selección
         crearEntrenadorRival();
     
-        // Configurar acciones de botones
         btnSeleccionarCriatura.addActionListener(e -> seleccionarCriatura());
         btnAtacar.addActionListener(e -> atacar());
-        btnSiguienteTurno.addActionListener(e -> siguienteTurno());
         btnGuardarProgreso.addActionListener(e -> guardarProgreso());
         btnCapturarPokemon.addActionListener(e -> capturarPokemon());
     
         actualizarTexto();
     }
-    
-    
+
     private int parseIntSeguro(String valor) {
         try {
             return Integer.parseInt(valor);  // Intenta convertir el valor a un número
@@ -102,62 +86,6 @@ public class JuegoGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }    
-    private Criatura seleccionarEnemigoDelRival(Criatura criaturaSeleccionada) {
-        int puntajeCriaturaSeleccionada = calcularPuntajeCriatura(criaturaSeleccionada);
-    
-        // Ajustar el rango para una mejor compatibilidad
-        int rango = 25;
-        List<Criatura> candidatos = entrenadorRival.getEquipo().stream()
-                .filter(c -> Math.abs(calcularPuntajeCriatura(c) - puntajeCriaturaSeleccionada) <= rango)
-                .collect(Collectors.toList());
-    
-        if (!candidatos.isEmpty()) {
-            Random random = new Random();
-            return candidatos.get(random.nextInt(candidatos.size()));
-        }
-    
-        // Si no hay candidatos adecuados, seleccionar el enemigo con puntaje más cercano
-        return entrenadorRival.getEquipo().stream()
-                .min((c1, c2) -> Integer.compare(
-                        Math.abs(calcularPuntajeCriatura(c1) - puntajeCriaturaSeleccionada),
-                        Math.abs(calcularPuntajeCriatura(c2) - puntajeCriaturaSeleccionada)))
-                .orElse(null);
-    }
-
-    private void turnoEnemigo() {
-        if (enemigo.getSalud() < 40 && entrenadorRival.getPocionesCuracion() > 0) {
-            Random random = new Random();
-            int cantidad = random.nextInt(Math.min(3, entrenadorRival.getPocionesCuracion())) + 1; // Hasta 3 pociones o las que tenga disponibles
-            entrenadorRival.usarPocionCuracion(enemigo, cantidad);
-            textArea.append(enemigo.getNombre() + " usó " + cantidad + " pociones de curación. Salud actual: " + enemigo.getSalud() + "\n");
-        } else {
-            enemigo.atacar(criaturaSeleccionada);
-            textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
-        }
-    }
-    
-    
-    private void usarPocionCuracion() {
-        if (criaturaSeleccionada != null) {
-            String cantidadStr = JOptionPane.showInputDialog(this, "¿Cuántas pociones deseas usar? (Máximo: " + entrenador1.getPocionesCuracion() + ")");
-            int cantidad;
-            try {
-                cantidad = Integer.parseInt(cantidadStr);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Entrada inválida.");
-                return;
-            }
-    
-            if (cantidad > 0 && cantidad <= entrenador1.getPocionesCuracion()) {
-                entrenador1.usarPocionCuracion(criaturaSeleccionada, cantidad);
-                actualizarTexto();
-            } else {
-                JOptionPane.showMessageDialog(this, "Cantidad inválida de pociones.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecciona una criatura primero.");
-        }
-    }
     
     private void seleccionarCriatura() {
         if (entrenador1.getEquipo().size() > 0) {
@@ -196,22 +124,20 @@ public class JuegoGUI extends JFrame {
     }
     
     
-// Método para calcular el puntaje de una criatura
-private int calcularPuntajeCriatura(Criatura criatura) {
-    // Calcula el puntaje basado en salud, ataque y defensa, ajusta la fórmula según sea necesario
-    return criatura.getSalud() + criatura.getAtaque() + criatura.getDefensa();
-}
 private void evolucionarCriatura(Criatura criatura) {
     String evolucion = criatura.getEvolucion();
-    if (evolucion != null && !evolucion.isEmpty()) {
-        // Buscar la criatura evolucionada en el archivo
-        try (BufferedReader reader = new BufferedReader(new FileReader("criaturas.txt"))) {
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] datos = linea.split(",");
-                if (datos[0].equalsIgnoreCase(evolucion)) {
-                    // Crear la nueva criatura
-                    Criatura evolucionada = new Criatura(
+    if (evolucion == null || evolucion.isEmpty()) {
+        textArea.append(criatura.getNombre() + " no tiene evolución definida.\n");
+        return;
+    }
+
+    try (BufferedReader reader = new BufferedReader(new FileReader("criaturas.txt"))) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            String[] datos = linea.split(",");
+            if (datos[0].equalsIgnoreCase(evolucion)) {
+                // Crear la nueva criatura evolucionada
+                Criatura evolucionada = new Criatura(
                         datos[0],
                         Integer.parseInt(datos[1]),
                         Integer.parseInt(datos[2]),
@@ -219,21 +145,21 @@ private void evolucionarCriatura(Criatura criatura) {
                         datos[4],
                         datos[5],
                         datos[6]
-                    );
-                    // Reemplazar la criatura en el equipo
-                    entrenador1.getEquipo().remove(criatura);
-                    entrenador1.getEquipo().add(evolucionada);
-                    textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
-                    return;
-                }
+                );
+
+                // Reemplazar la criatura en el equipo
+                entrenador1.getEquipo().remove(criatura); // Eliminar la criatura original
+                entrenador1.getEquipo().add(evolucionada); // Agregar la criatura evolucionada
+
+                textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
+                return;
             }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        textArea.append(criatura.getNombre() + " no tiene evolución definida.\n");
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
 private void atacar() {
     if (criaturaSeleccionada != null && enemigo != null) {
         criaturaSeleccionada.atacar(enemigo);
@@ -243,12 +169,17 @@ private void atacar() {
             textArea.append(enemigo.getNombre() + " ha sido derrotado!\n");
             criaturasVencidas.add(enemigo);
             entrenadorRival.getEquipo().remove(enemigo);
+            criaturaSeleccionada.incrementarCombatesGanados();
+
+            // Verificar si puede evolucionar
+            if (criaturaSeleccionada.getCombatesGanados() >= 2) { // Por ejemplo, requiere 2 combates ganados
+                evolucionarCriatura(criaturaSeleccionada);
+            }
 
             if (entrenadorRival.getEquipo().isEmpty()) {
                 textArea.append("¡Has ganado el combate! Todos los Pokémon enemigos han sido derrotados.\n");
                 enemigo = null;
 
-                // Mostrar el botón para capturar Pokémon
                 btnCapturarPokemon.setVisible(true);
                 return;
             }
@@ -275,58 +206,10 @@ private void atacar() {
                 seleccionarCriatura();
             }
         }
-        turnoEnemigo();
+
         actualizarTexto();
     }
-}   
-
-    private void elegirCriaturaVencida() {
-        if (criaturasVencidas.size() > 0) {
-            String[] nombresCriaturas = new String[criaturasVencidas.size()];
-            for (int i = 0; i < criaturasVencidas.size(); i++) {
-                nombresCriaturas[i] = criaturasVencidas.get(i).getNombre();
-            }
-    
-            String seleccion = (String) JOptionPane.showInputDialog(
-                    this,
-                    "Selecciona una criatura vencida para añadir a tu equipo:",
-                    "Elegir Criatura Vencida",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    nombresCriaturas,
-                    nombresCriaturas[0]
-            );
-    
-            if (seleccion != null) {
-                for (Criatura criatura : criaturasVencidas) {
-                    if (criatura.getNombre().equals(seleccion)) {
-                        entrenador1.capturarCriatura(criatura);
-                        criaturasVencidas.remove(criatura);
-                        textArea.append("\n" + criatura.getNombre() + " se ha unido a tu equipo.\n");
-                        break;
-                    }
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay criaturas vencidas para elegir.", "Atención", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-    private void siguienteTurno() {
-        // El enemigo ataca después de que el jugador ha atacado
-        if (enemigo != null && criaturaSeleccionada != null) {
-            enemigo.atacar(criaturaSeleccionada);
-            textArea.append("\n" + enemigo.getNombre() + " ataca a " + criaturaSeleccionada.getNombre() + "!\n");
-    
-            // Si la salud de la criatura seleccionada llega a 0, se muestra un mensaje de derrota
-            if (criaturaSeleccionada.getSalud() <= 0) {
-                textArea.append(criaturaSeleccionada.getNombre() + " ha sido derrotado! Has perdido.\n");
-            }
-    
-            // Actualizar el estado de la batalla
-            actualizarTexto();
-        }
-    }
+}
 
     public void seleccionarYGenerarEquipos() {
         // 1. Mostrar la colección del jugador para que seleccione su equipo.
@@ -503,31 +386,7 @@ private void atacar() {
             "Equipo Inicial", 
             JOptionPane.INFORMATION_MESSAGE);
     }
-       
-    private void asignarEquipoInicial() {
-        // Crear los Pokémon iniciales
-        List<Criatura> iniciales = new ArrayList<>();
-        iniciales.add(new Criatura("Charmander", 120, 50, 10, "Fuego", "Lanzallamas", "Charmeleon"));
-        iniciales.add(new Criatura("Squirtle", 110, 30, 10, "Agua", "Hydro Pump", "War Tortle"));
-        iniciales.add(new Criatura("Bulbasaur", 130, 35, 10, "Planta", "Látigo Cepa", "Ivysaur"));
-    
-        // Limpiar el equipo y la colección del jugador
-        entrenador1.getEquipo().clear();
-        entrenador1.getColeccion().clear();
-    
-        // Agregar los Pokémon iniciales al equipo y a la colección
-        for (Criatura inicial : iniciales) {
-            entrenador1.capturarCriatura(inicial);
-            entrenador1.agregarAColeccion(inicial);
-        }
-    
-        textArea.append("Se ha configurado el equipo inicial:\n");
-        for (Criatura criatura : iniciales) {
-            textArea.append("- " + criatura.getNombre() + "\n");
-        }
-    }
-    
-           
+ 
 private void mostrarEquipo(List<Criatura> equipo) {
     for (Criatura c : equipo) {
         System.out.printf("%s | Salud: %d | Ataque: %d | Defensa: %d | Puntuación: %d\n",
@@ -547,9 +406,6 @@ private int obtenerOpcionValida() {
     } while (opcion < 1 || opcion > entrenador1.getColeccion().size());
     return opcion;
 }
-
-    
-
     private void actualizarTexto() {
         StringBuilder texto = new StringBuilder();
         texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
@@ -596,16 +452,6 @@ private int obtenerOpcionValida() {
             JOptionPane.showMessageDialog(this, "Error al guardar el progreso", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void cargarProgreso() {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("progreso.dat"))) {
-            entrenador1 = (Entrenador) in.readObject();  // Cargar el objeto entrenador
-            JOptionPane.showMessageDialog(this, "Progreso cargado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el progreso", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
