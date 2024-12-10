@@ -7,9 +7,10 @@ public class Criatura {
     private String habilidad;
     private String evolucion;
     private int saludMaxima;
-    
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
+    // Nuevo atributo para almacenar los combates ganados
+    private int combatesGanados;
 
     // Constructor original
     public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion) {
@@ -20,12 +21,18 @@ public class Criatura {
         this.tipo = tipo;
         this.habilidad = habilidad;
         this.evolucion = evolucion;
+        this.combatesGanados = 0; //Inicializamos en 0
     }
     public void curar(int puntos) {
         this.salud = Math.min(salud + puntos, saludMaxima); // No puede exceder la salud máxima
         System.out.println(nombre + " fue curado en " + puntos + " puntos. Salud actual: " + salud);
     }
-
+    public int getCombatesGanados(){
+        return combatesGanados;
+    }
+    public void incrementarCombatesGanados(){
+        combatesGanados++;
+    }
     // Métodos getter y setter para los atributos
     public String getNombre() {
         return nombre;
@@ -93,4 +100,3 @@ public class Criatura {
 
 
 }
-
