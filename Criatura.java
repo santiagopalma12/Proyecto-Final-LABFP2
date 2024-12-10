@@ -6,12 +6,15 @@ public class Criatura {
     private String tipo;
     private String habilidad;
     private String evolucion;
+    private String rutaImagen;
+    private int combatesGanados;
+    private int saludMaxima;
     
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
 
     // Constructor original
-    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion) {
+    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion, String rutaImagen) {
         this.nombre = nombre;
         this.salud = salud;
         this.ataque = ataque;
@@ -19,9 +22,26 @@ public class Criatura {
         this.tipo = tipo;
         this.habilidad = habilidad;
         this.evolucion = evolucion;
+        this.rutaImagen = rutaImagen;
+        this.combatesGanados = 0;
+    }
+    public void curar(int puntos) {
+        this.salud = Math.min(salud + puntos, saludMaxima); // No puede exceder la salud máxima
+        System.out.println(nombre + " fue curado en " + puntos + " puntos. Salud actual: " + salud);
+    }
+    // Métodos getter y setter para los atributos
+    public int getCombatesGanados() {
+        return combatesGanados;
     }
 
-    // Métodos getter y setter para los atributos
+    public void incrementarCombatesGanados() {
+        combatesGanados++;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -85,7 +105,4 @@ public class Criatura {
         }
         System.out.println(this.nombre + " ahora tiene " + this.salud + " de salud.");
     }
-
-
 }
-
