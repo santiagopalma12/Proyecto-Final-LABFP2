@@ -18,7 +18,7 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
-    private static final String RUTA_IMAGENES = "Imagenes_pokemones/Imagenes/";
+    private static final String RUTA_IMAGENES = "Imagenes/";
 
     public JuegoGUI() {
         setTitle("Juego de Criaturas");
