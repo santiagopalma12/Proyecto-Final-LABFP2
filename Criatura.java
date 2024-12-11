@@ -26,6 +26,10 @@ public class Criatura {
     }
 
     // Métodos getter y setter para los atributos
+    public void curar(int cantidad) {
+        salud = Math.min(salud + cantidad, 100); // Salud máxima de 100
+    }
+
     public int getCombatesGanados() {
         return combatesGanados;
     }
