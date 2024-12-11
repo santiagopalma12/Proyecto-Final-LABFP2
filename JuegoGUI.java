@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import javax.swing.*;
 
@@ -15,95 +13,138 @@ public class JuegoGUI extends JFrame {
     private JButton btnAtacar, btnSeleccionarCriatura, btnGuardarProgreso, btnCapturarPokemon;
     private Entrenador entrenadorRival;
     private ArrayList<Criatura> criaturasVencidas = new ArrayList<>();
+    private JButton[] pocionesJugador;
+    private JButton[] pocionesEnemigo;
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
-    private static final String RUTA_IMAGENES = "Imagenes/";
+    private static final String RUTA_IMAGENES = "Imagenes_pokemones/Imagenes/";
 
-    @SuppressWarnings("unused")
     public JuegoGUI() {
         setTitle("Juego de Criaturas");
-        setSize(600, 400);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-    
+
+        // Panel principal dividido en dos áreas
+        JPanel panelPrincipal = new JPanel(new GridLayout(1, 2));
+
+        // Panel principal dividido en tres áreas
+        JPanel panelImagenes = new JPanel(new BorderLayout());
+
+        // Panel izquierdo (imagen del Pokémon seleccionado y pociones)
+        JPanel panelIzquierdo = new JPanel(new BorderLayout());
+        imagenCriaturaSeleccionada = new JLabel();
+        imagenCriaturaSeleccionada.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        panelIzquierdo.add(imagenCriaturaSeleccionada, BorderLayout.CENTER);
+
+        JPanel panelPocionesIzquierdo = new JPanel(new GridLayout(1, 4, 10, 10));
+        pocionesJugador = new JButton[4];
+        for (int i = 0; i < 4; i++) {
+            pocionesJugador[i] = crearBotonPocion(i, true);
+            panelPocionesIzquierdo.add(pocionesJugador[i]);
+        }
+        panelIzquierdo.add(panelPocionesIzquierdo, BorderLayout.SOUTH);
+
+        // Panel central (imagen "Versus")
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        imagenVersus = new JLabel();
+        imagenVersus.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        cargarImagenVersus();
+        panelCentral.add(imagenVersus, BorderLayout.CENTER);
+
+        // Panel derecho (imagen del Pokémon enemigo y pociones)
+        JPanel panelDerecho = new JPanel(new BorderLayout());
+        imagenEnemigo = new JLabel();
+        imagenEnemigo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        panelDerecho.add(imagenEnemigo, BorderLayout.CENTER);
+
+        JPanel panelPocionesDerecho = new JPanel(new GridLayout(1, 4, 10, 10));
+        pocionesEnemigo = new JButton[4];
+        for (int i = 0; i < 4; i++) {
+            pocionesEnemigo[i] = crearBotonPocion(i, false);
+            panelPocionesDerecho.add(pocionesEnemigo[i]);
+        }
+        panelDerecho.add(panelPocionesDerecho, BorderLayout.SOUTH);
+
+        // Agregar los paneles al panel principal
+        panelImagenes.add(panelIzquierdo, BorderLayout.WEST);
+        panelImagenes.add(panelCentral, BorderLayout.CENTER);
+        panelImagenes.add(panelDerecho, BorderLayout.EAST);
+
+        // Agregar el panel principal al JFrame
+        add(panelImagenes, BorderLayout.CENTER);
+
+        // Panel derecho para el área de texto
+        JPanel panelTexto = new JPanel(new BorderLayout());
         textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);
-    
+        panelTexto.add(scrollPane, BorderLayout.CENTER);
+
+        // Agregar ambos paneles al principal
+        panelPrincipal.add(panelImagenes);
+        panelPrincipal.add(panelTexto);
+        add(panelPrincipal, BorderLayout.CENTER);
+
+        // Panel inferior con botones de acción
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
         btnAtacar = new JButton("Atacar");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
-        btnCapturarPokemon.setVisible(false);
-    
+        btnCapturarPokemon.setVisible(true);
+
         panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
-        JButton btnVerColeccion = new JButton("Ver Colección");
-        panelBotones.add(btnVerColeccion);
-        btnVerColeccion.addActionListener(e -> mostrarColeccion());
 
+        // Inicialización del juego
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
-    
+
         cargarCriaturasDesdeArchivo("criaturas.txt");
-        seleccionarEquipoInicial(); // Invocar el menú de selección
+        seleccionarEquipoInicial();
         crearEntrenadorRival();
-        
-    
+
         btnSeleccionarCriatura.addActionListener(e -> seleccionarCriatura());
         btnAtacar.addActionListener(e -> atacar());
         btnGuardarProgreso.addActionListener(e -> guardarProgreso());
         btnCapturarPokemon.addActionListener(e -> capturarPokemon());
-    
+
         actualizarTexto();
-         // Crear el panel para las imágenes
-         JPanel panelImagenes = new JPanel();
-         panelImagenes.setLayout(new GridBagLayout()); // Distribución más flexible
-         GridBagConstraints gbc = new GridBagConstraints();
-         gbc.gridx = 0; gbc.gridy = 0; gbc.insets = new Insets(10, 10, 10, 10);
- 
-         // Crear labels para las imágenes
-         imagenCriaturaSeleccionada = new JLabel();
-         imagenCriaturaSeleccionada.setHorizontalAlignment(JLabel.CENTER);
- 
-         imagenVersus = new JLabel();
-         imagenVersus.setHorizontalAlignment(JLabel.CENTER);
-         cargarImagenVersus();
- 
-         imagenEnemigo = new JLabel();
-         imagenEnemigo.setHorizontalAlignment(JLabel.CENTER);
- 
-         // Añadir los labels al panel
-         gbc.gridx = 0;
-         panelImagenes.add(imagenCriaturaSeleccionada, gbc);
- 
-         gbc.gridx = 1;
-         panelImagenes.add(imagenVersus, gbc);
- 
-         gbc.gridx = 2;
-         panelImagenes.add(imagenEnemigo, gbc);
- 
-         add(panelImagenes, BorderLayout.NORTH);
+        actualizarImagenes();
     }
+
+    private JButton crearBotonPocion(int index, boolean esJugador) {
+        JButton boton = new JButton(new ImageIcon(RUTA_IMAGENES + "pocion.png"));
+        boton.addActionListener(e -> {
+            if (esJugador && criaturaSeleccionada != null) {
+                criaturaSeleccionada.curar(20);
+                boton.setEnabled(false);
+            } else if (!esJugador && enemigo != null) {
+                enemigo.curar(20);
+                boton.setEnabled(false);
+            }
+            actualizarTexto();
+        });
+        return boton;
+    }
+
     private void cargarImagenVersus() {
         String rutaVersus = RUTA_IMAGENES + "versus.png";
         File archivoImagen = new File(rutaVersus);
-    
+
         if (archivoImagen.exists()) {
             ImageIcon icon = new ImageIcon(rutaVersus);
             imagenVersus.setIcon(new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
         } else {
-            imagenVersus.setText("VS"); // Texto alternativo si no se encuentra la imagen
+            imagenVersus.setText("VS");
             imagenVersus.setHorizontalAlignment(JLabel.CENTER);
         }
     }
-    
 
     private void actualizarImagenes() {
         if (criaturaSeleccionada != null) {
@@ -112,13 +153,50 @@ public class JuegoGUI extends JFrame {
         } else {
             imagenCriaturaSeleccionada.setIcon(null);
         }
-    
+
         if (enemigo != null) {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
             imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
         } else {
             imagenEnemigo.setIcon(null);
         }
+    }
+
+    private void actualizarTexto() {
+        StringBuilder texto = new StringBuilder();
+        texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
+
+        for (Criatura c : entrenador1.getEquipo()) {
+            texto.append("- ").append(c.getNombre())
+                  .append(" | Salud: ").append(c.getSalud())
+                  .append(" | Ataque: ").append(c.getAtaque())
+                  .append(" | Defensa: ").append(c.getDefensa())
+                  .append("\n");
+        }
+
+        texto.append("\n=== Equipo de ").append(entrenadorRival.getNombre()).append(" ===\n");
+
+        for (Criatura c : entrenadorRival.getEquipo()) {
+            texto.append("- ").append(c.getNombre())
+                  .append(" | Salud: ").append(c.getSalud())
+                  .append(" | Ataque: ").append(c.getAtaque())
+                  .append(" | Defensa: ").append(c.getDefensa())
+                  .append("\n");
+        }
+
+        texto.append("\n=== Estado Actual ===\n");
+
+        if (criaturaSeleccionada != null) {
+            texto.append(">> Criatura seleccionada: ").append(criaturaSeleccionada.getNombre())
+                  .append(" | Salud: ").append(criaturaSeleccionada.getSalud()).append("\n");
+        }
+
+        if (enemigo != null) {
+            texto.append(">> Enemigo: ").append(enemigo.getNombre())
+                  .append(" | Salud: ").append(enemigo.getSalud()).append("\n");
+        }
+
+        textArea.setText(texto.toString());
     }
     private int parseIntSeguro(String valor) {
         try {
@@ -281,65 +359,77 @@ private void atacar() {
 
 
 
-    public void seleccionarYGenerarEquipos() {
-        // 1. Mostrar la colección del jugador para que seleccione su equipo.
-        System.out.println("Elige tu equipo (hasta 3 Pokémon):");
-        mostrarColeccion(entrenador1.getColeccion());
-    
-        // Leer las elecciones del jugador
-        List<Criatura> equipoJugador = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            int opcion = obtenerOpcionValida();
-            equipoJugador.add(entrenador1.getColeccion().get(opcion - 1));
-        }
-        entrenador1.setEquipo(equipoJugador);
-    
-        // 2. Generar un equipo para el enemigo basado en la puntuación del equipo del jugador.
-        List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
-        entrenadorRival.setEquipo(equipoEnemigo);
-    
-        // Mostrar equipos
-        System.out.println("Tu equipo:");
-        mostrarEquipo(entrenador1.getEquipo());
-        System.out.println("\nEquipo enemigo:");
-        mostrarEquipo(entrenadorRival.getEquipo());
+    private void seleccionarYGenerarEquipos() {
+    System.out.println("Elige tu equipo (hasta 3 Pokémon):");
+    mostrarColeccion(entrenador1.getColeccion());
+
+    List<Criatura> equipoJugador = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+        int opcion = obtenerOpcionValida();
+        equipoJugador.add(entrenador1.getColeccion().get(opcion - 1));
     }
-    private void mostrarColeccion(List<Criatura> coleccion) {
-        for (int i = 0; i < coleccion.size(); i++) {
-            Criatura c = coleccion.get(i);
-            System.out.printf("%d. %s (Puntuación: %d)\n", i + 1, c.getNombre(), c.getPuntaje());
-        }
+    entrenador1.setEquipo(equipoJugador);
+
+    List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
+    entrenadorRival.setEquipo(equipoEnemigo);
+
+    System.out.println("Tu equipo:");
+    mostrarEquipo(entrenador1.getEquipo());
+    System.out.println("\nEquipo enemigo:");
+    mostrarEquipo(entrenadorRival.getEquipo());
+}
+private void mostrarColeccion(List<Criatura> coleccion) {
+    for (int i = 0; i < coleccion.size(); i++) {
+        Criatura c = coleccion.get(i);
+        System.out.printf("%d. %s (Puntuación: %d)\n", i + 1, c.getNombre(), c.getPuntaje());
     }
-    public void crearEntrenadorRival() {
-        entrenadorRival = new Entrenador("Rival");
-    
-        // Generar un equipo balanceado basado en las criaturas disponibles
-        List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenador1.getColeccion(), entrenador1.getEquipo());
-        entrenadorRival.setEquipo(equipoEnemigo);
+}
+private void crearEntrenadorRival() {
+    entrenadorRival = new Entrenador("Rival");
+    List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenador1.getColeccion(), entrenador1.getEquipo());
+    entrenadorRival.setEquipo(equipoEnemigo);
+}
+
+private List<Criatura> generarEquipoEmparejado(List<Criatura> coleccionRival, List<Criatura> equipoJugador) {
+    int promedioJugador = equipoJugador.stream()
+        .mapToInt(Criatura::getPuntaje)
+        .sum() / equipoJugador.size();
+
+    int rango = 10;
+    List<Criatura> posiblesEnemigos = coleccionRival.stream()
+        .filter(c -> Math.abs(c.getPuntaje() - promedioJugador) <= rango)
+        .collect(Collectors.toList());
+
+    List<Criatura> equipoEnemigo = new ArrayList<>();
+    Random random = new Random();
+    for (int i = 0; i < 3 && !posiblesEnemigos.isEmpty(); i++) {
+        Criatura seleccionada = posiblesEnemigos.remove(random.nextInt(posiblesEnemigos.size()));
+        equipoEnemigo.add(seleccionada);
     }
 
-    private List<Criatura> generarEquipoEmparejado(List<Criatura> coleccionRival, List<Criatura> equipoJugador) {
-        int promedioJugador = equipoJugador.stream()
-                                            .mapToInt(Criatura::getPuntaje)
-                                            .sum() / equipoJugador.size();
-    
-        // Rango fijo de 10 puntos
-        int rango = 10;
-    
-        // Filtrar criaturas dentro de la diferencia de 10 puntos
-        List<Criatura> posiblesEnemigos = coleccionRival.stream()
-            .filter(c -> Math.abs(c.getPuntaje() - promedioJugador) <= rango)
-            .collect(Collectors.toList());
-    
-        List<Criatura> equipoEnemigo = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < 3; i++) {
-            Criatura seleccionada = posiblesEnemigos.remove(random.nextInt(posiblesEnemigos.size()));
-            equipoEnemigo.add(seleccionada);
+    return equipoEnemigo;
+}
+
+private int obtenerOpcionValida() {
+    Scanner scanner = new Scanner(System.in);
+    int opcion;
+    do {
+        System.out.print("Ingresa el número de la criatura que quieres seleccionar: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Por favor, ingresa un número válido: ");
+            scanner.next();
         }
-    
-        return equipoEnemigo;
+        opcion = scanner.nextInt();
+    } while (opcion < 1 || opcion > entrenador1.getColeccion().size());
+    return opcion;
+}
+
+private void mostrarEquipo(List<Criatura> equipo) {
+    for (Criatura c : equipo) {
+        System.out.printf("%s | Salud: %d | Ataque: %d | Defensa: %d | Puntuación: %d\n",
+            c.getNombre(), c.getSalud(), c.getAtaque(), c.getDefensa(), c.getPuntaje());
     }
+}
     private void capturarPokemon() {
         if (criaturasVencidas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay Pokémon vencidos para capturar.", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -352,13 +442,13 @@ private void atacar() {
         }
     
         String seleccion = (String) JOptionPane.showInputDialog(
-                this,
-                "Selecciona un Pokémon para capturar:",
-                "Capturar Pokémon",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                nombresCriaturas,
-                nombresCriaturas[0]
+            this,
+            "Selecciona un Pokémon para capturar:",
+            "Capturar Pokémon",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            nombresCriaturas,
+            nombresCriaturas[0]
         );
     
         if (seleccion != null) {
@@ -457,62 +547,7 @@ private void atacar() {
             JOptionPane.INFORMATION_MESSAGE);
     }
  
-private void mostrarEquipo(List<Criatura> equipo) {
-    for (Criatura c : equipo) {
-        System.out.printf("%s | Salud: %d | Ataque: %d | Defensa: %d | Puntuación: %d\n",
-                          c.getNombre(), c.getSalud(), c.getAtaque(), c.getDefensa(), c.getPuntaje());
-    }
-}
-@SuppressWarnings("resource")
-private int obtenerOpcionValida() {
-    Scanner scanner = new Scanner(System.in);
-    int opcion;
-    do {
-        System.out.print("Ingresa el número de la criatura que quieres seleccionar: ");
-        while (!scanner.hasNextInt()) {
-            System.out.print("Por favor, ingresa un número válido: ");
-            scanner.next();
-        }
-        opcion = scanner.nextInt();
-    } while (opcion < 1 || opcion > entrenador1.getColeccion().size());
-    return opcion;
-}
-    private void actualizarTexto() {
-        StringBuilder texto = new StringBuilder();
-        texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
-    
-        for (Criatura c : entrenador1.getEquipo()) {
-            texto.append("- ").append(c.getNombre())
-                  .append(" | Salud: ").append(c.getSalud())
-                  .append(" | Ataque: ").append(c.getAtaque())
-                  .append(" | Defensa: ").append(c.getDefensa())
-                  .append("\n");
-        }
-    
-        texto.append("\n=== Equipo de ").append(entrenadorRival.getNombre()).append(" ===\n");
-    
-        for (Criatura c : entrenadorRival.getEquipo()) {
-            texto.append("- ").append(c.getNombre())
-                  .append(" | Salud: ").append(c.getSalud())
-                  .append(" | Ataque: ").append(c.getAtaque())
-                  .append(" | Defensa: ").append(c.getDefensa())
-                  .append("\n");
-        }
-    
-        texto.append("\n=== Estado Actual ===\n");
-    
-        if (criaturaSeleccionada != null) {
-            texto.append(">> Criatura seleccionada: ").append(criaturaSeleccionada.getNombre())
-                  .append(" | Salud: ").append(criaturaSeleccionada.getSalud()).append("\n");
-        }
-    
-        if (enemigo != null) {
-            texto.append(">> Enemigo: ").append(enemigo.getNombre())
-                  .append(" | Salud: ").append(enemigo.getSalud()).append("\n");
-        }
-    
-        textArea.setText(texto.toString());
-    }
+
     
     
     private void guardarProgreso() {
