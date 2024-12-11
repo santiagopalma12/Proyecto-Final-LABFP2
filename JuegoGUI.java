@@ -20,6 +20,7 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenVersus;
     private static final String RUTA_IMAGENES = "Imagenes/";
 
+    @SuppressWarnings("unused")
     public JuegoGUI() {
         setTitle("Juego de Criaturas");
         setSize(600, 400);
@@ -462,6 +463,7 @@ private void mostrarEquipo(List<Criatura> equipo) {
                           c.getNombre(), c.getSalud(), c.getAtaque(), c.getDefensa(), c.getPuntaje());
     }
 }
+@SuppressWarnings("resource")
 private int obtenerOpcionValida() {
     Scanner scanner = new Scanner(System.in);
     int opcion;
