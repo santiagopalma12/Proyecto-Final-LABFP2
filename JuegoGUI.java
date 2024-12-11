@@ -44,9 +44,9 @@ public class JuegoGUI extends JFrame {
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
-        JButton btnVerColeccion = new JButton("Ver Colección");
-        panelBotones.add(btnVerColeccion);
-        btnVerColeccion.addActionListener(e -> mostrarColeccion());
+        JButton btnVerPokedex = new JButton("Ver Pokédex");
+        panelBotones.add(btnVerPokedex);
+        btnVerPokedex.addActionListener(e -> mostrarPokedex());
 
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
@@ -140,9 +140,10 @@ public class JuegoGUI extends JFrame {
                 String tipo = datos[4];
                 String habilidad = datos[5];
                 String evolucion = datos[6];
-    
                 String rutaImagen = RUTA_IMAGENES + nombre + " delante.png";
-                Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion, rutaImagen);
+                String descripcion = datos[8]; // Nueva columna de descripción
+
+                Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion, rutaImagen, descripcion);
 
                 entrenador1.agregarAColeccion(criatura); // Solo agregar a la colección
             }
@@ -209,7 +210,8 @@ private void evolucionarCriatura(Criatura criatura) {
                         datos[4],
                         datos[5],
                         datos[6],
-                        datos[7]
+                        datos[7],
+                        datos[8]
                     
                 );
 
@@ -278,38 +280,56 @@ private void atacar() {
     }
 }
 
+public void seleccionarYGenerarEquipos() {
+    // 1. Mostrar la Pokédex del jugador
+    System.out.println("Elige tu equipo (hasta 3 Pokémon):");
+    entrenador1.getPokedex().mostrarPokedex();
 
+    // 2. Seleccionar el equipo del jugador
+    List<Criatura> equipoJugador = new ArrayList<>();
+    for (int i = 0; i < 3; i++) {
+        try {
+            int opcion = obtenerOpcionValida(); // Asume que devuelve un índice basado en entrada del usuario
+            Criatura seleccionada = entrenador1.getColeccion().get(opcion - 1);
 
+            if (equipoJugador.contains(seleccionada)) {
+                System.out.println("Ya seleccionaste este Pokémon. Elige otro.");
+                i--; // Permitir al usuario reintentar
+                continue;
+            }
 
-    public void seleccionarYGenerarEquipos() {
-        // 1. Mostrar la colección del jugador para que seleccione su equipo.
-        System.out.println("Elige tu equipo (hasta 3 Pokémon):");
-        mostrarColeccion(entrenador1.getColeccion());
-    
-        // Leer las elecciones del jugador
-        List<Criatura> equipoJugador = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            int opcion = obtenerOpcionValida();
-            equipoJugador.add(entrenador1.getColeccion().get(opcion - 1));
-        }
-        entrenador1.setEquipo(equipoJugador);
-    
-        // 2. Generar un equipo para el enemigo basado en la puntuación del equipo del jugador.
-        List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
-        entrenadorRival.setEquipo(equipoEnemigo);
-    
-        // Mostrar equipos
-        System.out.println("Tu equipo:");
-        mostrarEquipo(entrenador1.getEquipo());
-        System.out.println("\nEquipo enemigo:");
-        mostrarEquipo(entrenadorRival.getEquipo());
-    }
-    private void mostrarColeccion(List<Criatura> coleccion) {
-        for (int i = 0; i < coleccion.size(); i++) {
-            Criatura c = coleccion.get(i);
-            System.out.printf("%d. %s (Puntuación: %d)\n", i + 1, c.getNombre(), c.getPuntaje());
+            equipoJugador.add(seleccionada);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Opción fuera de rango. Intenta nuevamente.");
+            i--; // Permitir al usuario reintentar
         }
     }
+    entrenador1.setEquipo(equipoJugador);
+
+    // 3. Generar el equipo del enemigo basado en el equipo del jugador
+    List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
+    entrenadorRival.setEquipo(equipoEnemigo);
+
+    // 4. Mostrar equipos
+    System.out.println("Tu equipo:");
+    mostrarEquipo(entrenador1.getEquipo());
+    System.out.println("\nEquipo enemigo:");
+    mostrarEquipo(entrenadorRival.getEquipo());
+}
+
+    private void mostrarPokedex() {
+        Pokedex pokedex = new Pokedex(); // Crear una instancia de Pokedex
+        
+        // Agregar criaturas a la Pokedex desde la colección del jugador
+        for (Criatura criatura : entrenador1.getColeccion()) {
+            pokedex.agregarCriatura(criatura);
+        }
+        
+        // Mostrar todas las criaturas en la Pokedex
+        pokedex.mostrarPokedex();
+    }
+    
+  
     public void crearEntrenadorRival() {
         entrenadorRival = new Entrenador("Rival");
     
@@ -378,32 +398,13 @@ private void atacar() {
     
         actualizarTexto();
     }
-    private void mostrarColeccion() {
-        List<Criatura> coleccion = entrenador1.getColeccion();
-    
-        if (coleccion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tu colección está vacía.", "Colección", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-    
-        StringBuilder sb = new StringBuilder("Tu colección de Pokémon:\n");
-        for (Criatura criatura : coleccion) {
-            sb.append("- ").append(criatura.getNombre())
-              .append(" | Salud: ").append(criatura.getSalud())
-              .append(" | Ataque: ").append(criatura.getAtaque())
-              .append(" | Defensa: ").append(criatura.getDefensa())
-              .append("\n");
-        }
-    
-        JOptionPane.showMessageDialog(this, sb.toString(), "Colección", JOptionPane.INFORMATION_MESSAGE);
-    }
     
     private void seleccionarEquipoInicial() {
         List<Criatura> coleccion = entrenador1.getColeccion();
     
         if (coleccion.size() < 3) {
             JOptionPane.showMessageDialog(this, 
-                "Tu colección debe tener al menos 3 Pokémon para formar un equipo.", 
+                "Debes tener al menos a 3 Pokémon para formar un equipo.", 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             return;

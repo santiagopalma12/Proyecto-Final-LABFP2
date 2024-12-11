@@ -1,101 +1,101 @@
-Pikachu,100,40,20,Eléctrico,Impactrueno,Raichu,1
-Raichu,120,60,50,Eléctrico,Rayo,No evoluciona,0
-Charmander,120,50,30,Fuego,Lanzallamas,Charmeleon,1
-Charmeleon,150,60,40,Fuego,Puño Fuego,Charizard,2
-Charizard,180,80,60,Fuego/Volador,Garra Dragón,No evoluciona,0
-Squirtle,110,30,40,Agua,Hydro Pump,War Tortle,1
-War Tortle,130,40,50,Agua,Hydro Pump,Blastoise,2
-Blastoise,180,60,70,Agua,Hydro Bomba,No evoluciona,0
-Bulbasaur,130,35,35,Planta,Látigo Cepa,Ivysaur,1
-Ivysaur,140,55,60,Planta,Rayo Solar,Venusaur,2
-Venusaur,160,70,70,Planta,Bailarina Floral,No evoluciona,0
-Jigglypuff,90,25,20,Normal,Voz Arrulladora,Wigglytuff,1
-Geodude,140,45,50,Tierra,Terratemblor,Graveler,1
-Graveler,160,55,65,Tierra,Terratemblor,Golem,2
-Gastly,80,60,15,Fantasma,Bola Sombra,Gengar,1
-Gengar,100,80,25,Fantasma,Bola Sombra,No evoluciona,0
-Machop,150,55,40,Lucha,Puño Karate,Machoke,1
-Machoke,160,70,50,Lucha,Puño Karate,Machamp,2
-Machamp,180,80,60,Lucha,Puño Dynamic,No evoluciona,0
-Pidgey,70,20,15,Volador,Ataque Rápido,Pidgeotto,1
-Pidgeotto,100,50,40,Volador,Ataque Rápido,Pidgeot,2
-Pidgeot,140,70,60,Volador,Corte Aéreo,No evoluciona,0
-Abra,60,70,10,Psiquico,Psíquico,Kadabra,1
-Kadabra,80,80,15,Psiquico,Confusión,Alakazam,2
-Alakazam,90,90,20,Psiquico,Puño Fuego,No evoluciona,0
-Eevee,100,30,30,Normal,Bola Sombra,Vaporeon,1
-Vaporeon,130,65,60,Agua,Bomba Acuática,No evoluciona,0
-Jolteon,130,65,60,Eléctrico,Impactrueno,No evoluciona,0
-Flareon,130,65,60,Fuego,Lanzallamas,No evoluciona,0
-Magikarp,50,10,5,Agua,Salpicadura,Gyarados,1
-Gyarados,170,85,40,Agua,Hydro Pump,No evoluciona,0
-Onix,160,50,60,Tierra,Desarme,Steelix,1
-Mewtwo,190,100,50,Psiquico,Psíquico,No evoluciona,0
-Articuno,170,80,60,Hielo,Puño Hielo,No evoluciona,0
-Rattata,60,20,10,Normal,Mordisco,Raticate,1
-Raticate,80,40,35,Normal,Colmillo Rápido,No evoluciona,0
-Sandshrew,120,40,45,Tierra,Cavar,Sandslash,1
-Oddish,70,50,55,Planta,Látigo Cepa,Gloom,1
-Gloom,80,60,65,Planta,Bola Sombra,Vileplume,2
-Vileplume,100,70,70,Planta/Rayo Solar,No evoluciona,0
-Diglett,50,40,25,Tierra,Ataque Arena,Dugtrio,1
-Dugtrio,80,70,50,Tierra,Cavar,No evoluciona,0
-Psyduck,100,55,45,Agua,Psiquico,Golduck,1
-Golduck,140,70,60,Agua,Hydro Pump,No evoluciona,0
-Mankey,100,50,40,Lucha,Puño Karate,Primeape,1
-Primeape,130,70,50,Lucha,Golpe Furia,No evoluciona,0
-Growlithe,110,60,50,Fuego,Llamarada,Arcanine,1
-Arcanine,160,90,70,Fuego,Rugido,No evoluciona,0
-Poliwag,90,30,25,Agua,Chorro de Agua,Poliwhirl,1
-Poliwhirl,120,50,45,Agua,Puño Hielo,Poliwrath,2
-Poliwrath,180,70,80,Agua/Lucha,Terremoto,No evoluciona,0
-Farfetch'd,90,55,50,Normal,Corte,No evoluciona,0
-Krabby,100,50,70,Agua,Tenaza,Kingler,1
-Kingler,140,80,90,Agua,Martillazo,No evoluciona,0
-Voltorb,80,50,40,Eléctrico,Explosión,Electrode,1
-Electrode,100,80,60,Eléctrico,Impactrueno,No evoluciona,0
-Exeggcute,90,60,45,Planta,Bomba Huevo,Exeggutor,1
-Exeggutor,160,85,80,Planta/Psiquico,Rayo Solar,No evoluciona,0
-Cubone,100,40,60,Tierra,Hueso Palo,Marowak,1
-Marowak,130,60,80,Tierra,Lanzar Hueso,No evoluciona,0
-Hitmonlee,140,120,50,Lucha,Patada Alta,No evoluciona,0
-Hitmonchan,140,50,120,Lucha,Puño Fuego,No evoluciona,0
-Lickitung,150,60,75,Normal,Lamer,No evoluciona,0
-Koffing,90,40,65,Veneno,Gas Veneno,Weezing,1
-Weezing,130,60,85,Veneno,Humo Doble,No evoluciona,0
-Rhyhorn,140,60,75,Tierra/Roca,Golpe Cabeza,Rhydon,1
-Rhydon,160,85,100,Tierra/Roca,Terremoto,No evoluciona,0
-Chansey,250,20,80,Normal,Cura Natural,No evoluciona,0
-Tangela,100,60,80,Planta,Látigo Cepa,No evoluciona,0
-Kangaskhan,180,80,80,Normal,Golpe Cometa,No evoluciona,0
-Horsea,80,50,40,Agua,Chorro de Agua,Seadra,1
-Seadra,120,70,60,Agua,Hydro Pump,No evoluciona,0
-Goldeen,90,45,40,Agua,Pico Taladro,Seaking,1
-Seaking,130,65,60,Agua,Hydro Pump,No evoluciona,0
-Staryu,90,50,45,Agua,Burbuja Starmie,1
-Starmie,110,70,65,Agua/Psiquico,Rayo,No evoluciona,0
-Mr. Mime,110,65,65,Psiquico/Bicho,Barrera,No evoluciona,0
-Scyther,140,110,80,Bicho/Volador,Corte Filo,No evoluciona,0
-Jynx,130,50,75,Hielo/Psiquico,Rayo Hielo,No evoluciona,0
-Electabuzz,140,80,70,Eléctrico,Impactrueno,No evoluciona,0
-Magmar,140,90,80,Fuego,Pirotecnia,No evoluciona,0
-Pinsir,150,125,100,Bicho,Machada,No evoluciona,0
-Tauros,150,100,95,Normal,Embate,No evoluciona,0
-Lapras,180,85,85,Agua/Hielo,Rayo Hielo,No evoluciona,0
-Ditto,48,48,48,Normal,Transformación,No evoluciona,0
-Porygon,130,75,70,Normal,Conversion,No evoluciona,0
-Omanyte,90,40,55,Roca/Agua,Golpe Concha,Omastar,1
-Omastar,140,70,90,Roca/Agua,Hidro Bomba,No evoluciona,0
-Kabuto,80,60,55,Roca/Agua,Absorción,Kabutops,1
-Kabutops,140,85,100,Roca/Agua,Tajo Cortante,No evoluciona,0
-Aerodactyl,160,105,70,Roca/Volador,Garra Dragón,No evoluciona,0
-Snorlax,180,85,110,Normal,Descanso,No evoluciona,0
-Zapdos,170,125,90,Eléctrico/Volador,Trueno,No evoluciona,0
-Moltres,170,125,90,Fuego/Volador,Llamarada,No evoluciona,0
-Dratini,90,50,45,Dragón,Giro Dragón,Dragonair,1
-Dragonair,120,75,70,Dragón,Ventisca,Dragonite,2
-Dragonite,180,100,100,Dragón/Volador,Furia Dragón,No evoluciona,0
-Mew,100,100,100,Psiquico,Poder Oculto,No evoluciona,0
-Golem, 200, 120, 130, Roca/Tierra, Terremoto, No evoluciona, 0  
-Steelix, 150, 85, 200, Acero/Tierra, Cola Férrea, No evoluciona, 0  
-Sandslash, 150, 100, 120, Tierra, Cuchillada, No evoluciona, 0  
+Pikachu,100,40,20,Eléctrico,Impactrueno,Raichu,1, Un ratón eléctrico que almacena energía en sus mejillas y libera potentes rayos
+Raichu,120,60,50,Eléctrico,Rayo,No evoluciona,0, La evolución de Pikachu, capaz de generar descargas aún más poderosas
+Charmander,120,50,30,Fuego,Lanzallamas,Charmeleon,1, Un lagarto de fuego cuyo entusiasmo se refleja en la llama de su cola
+Charmeleon,150,60,40,Fuego,Puño Fuego,Charizard,2, La forma más agresiva de Charmander, conocido por su espíritu indomable
+Charizard,180,80,60,Fuego/Volador,Garra Dragón,No evoluciona,0, Un dragón majestuoso que vuela por el cielo y exhala llamas abrasadoras
+Squirtle,110,30,40,Agua,Hydro Pump,War Tortle,1, Una pequeña tortuga acuática que dispara agua con fuerza desde su caparazón
+War Tortle,130,40,50,Agua,Hydro Pump,Blastoise,2, La forma evolucionada de Squirtle, con orejas plumadas y mayor resistencia
+Blastoise,180,60,70,Agua,Hydro Bomba,No evoluciona,0, Una tortuga masiva equipada con cañones que dispara chorros de agua a alta presión
+Bulbasaur,130,35,35,Planta,Látigo Cepa,Ivysaur,1, Un Pokémon con una semilla en la espalda que crece a medida que madura
+Ivysaur,140,55,60,Planta,Rayo Solar,Venusaur,2, La forma evolucionada de Bulbasaur, con una planta floreciendo en su espalda
+Venusaur,160,70,70,Planta,Bailarina Floral,No evoluciona,0, Un Pokémon robusto cuya flor desprende un aroma relajante para atraer a otros
+Jigglypuff,90,25,20,Normal,Voz Arrulladora,Wigglytuff,1, Un adorable Pokémon que canta canciones para hacer dormir a sus oponentes
+Geodude,140,45,50,Tierra,Terratemblor,Graveler,1, Una roca viviente que flota en el aire, con gran fuerza y resistencia
+Graveler,160,55,65,Tierra,Terratemblor,Golem,2, Un Pokémon rocoso que rueda por las montañas causando temblores
+Gastly,80,60,15,Fantasma,Bola Sombra,Gengar,1, Un Pokémon gaseoso que se oculta en la oscuridad para sorprender a sus enemigos
+Gengar,100,80,25,Fantasma,Bola Sombra,No evoluciona,0, Un espíritu travieso conocido por causar sustos con su sonrisa siniestra
+Machop,150,55,40,Lucha,Puño Karate,Machoke,1, Un luchador fuerte y decidido que entrena constantemente para mejorar
+Machoke,160,70,50,Lucha,Puño Karate,Machamp,2, Un Pokémon musculoso que puede cargar pesas inmensas con facilidad
+Machamp,180,80,60,Lucha,Puño Dynamic,No evoluciona,0, Un Pokémon de cuatro brazos capaz de lanzar múltiples golpes a la vez
+Pidgey,70,20,15,Volador,Ataque Rápido,Pidgeotto,1, Pidgey es un pequeño Pokémon de tipo Volador que se caracteriza por su agilidad y su capacidad de atacar rápidamente con sus alas
+Pidgeotto,100,50,40,Volador,Ataque Rápido,Pidgeot,2, Pidgeotto es la evolución de Pidgey. Es más fuerte y rápido, con un plumaje más desarrollado y una gran habilidad para batallar en el aire
+Pidgeot,140,70,60,Volador,Corte Aéreo,No evoluciona,0, Pidgeot es la última evolución de Pidgey. Un Pokémon elegante y poderoso, conocido por su increíble velocidad y su habilidad para realizar ataques aéreos devastadores
+Abra,60,70,10,Psiquico,Psíquico,Kadabra,1, Abra es un Pokémon de tipo Psíquico con habilidades psíquicas bastante fuertes, aunque tiende a dormir la mayor parte del día
+Kadabra,80,80,15,Psiquico,Confusión,Alakazam,2, Kadabra es la evolución de Abra, y posee habilidades psíquicas aún más desarrolladas, siendo capaz de realizar ataques mentales como Confusión
+Alakazam,90,90,20,Psiquico,Puño Fuego,No evoluciona,0, Alakazam es un Pokémon de tipo Psíquico conocido por su gran inteligencia y poderes psíquicos. Su velocidad y ataques mentales lo hacen muy temido en combate
+Eevee,100,30,30,Normal,Bola Sombra,Vaporeon,1, Eevee es un Pokémon extremadamente versátil, capaz de evolucionar de varias formas dependiendo de su entorno. Es muy popular por su aspecto adorable y sus múltiples evoluciones
+Vaporeon,130,65,60,Agua,Bomba Acuática,No evoluciona,0, Vaporeon es la evolución de Eevee en un Pokémon de tipo Agua, conocido por su elegancia y su capacidad para lanzar poderosos ataques acuáticos
+Jolteon,130,65,60,Eléctrico,Impactrueno,No evoluciona,0, Jolteon es una de las evoluciones de Eevee, de tipo Eléctrico. Es rápido y tiene un gran poder de ataque con sus descargas eléctricas
+Flareon,130,65,60,Fuego,Lanzallamas,No evoluciona,0, Flareon es una de las evoluciones de Eevee, de tipo Fuego. Su ataque Lanzallamas es devastador y su personalidad es ardiente
+Magikarp,50,10,5,Agua,Salpicadura,Gyarados,1, Magikarp es un Pokémon de tipo Agua, conocido por su increíble debilidad y su habilidad única de saltar sin control. Su evolución, Gyarados, es completamente diferente
+Gyarados,170,85,40,Agua,Hydro Pump,No evoluciona,0, Gyarados es una de las criaturas más temidas del mundo Pokémon, con una gran fuerza y la capacidad de causar destrucción masiva con su ataque HidroBomba
+Onix,160,50,60,Tierra,Desarme,Steelix,1, Onix es un Pokémon de tipo Tierra que se parece a una serpiente hecha de rocas. Su resistencia es increíble, y es capaz de enfrentarse a enemigos mucho más grandes
+Mewtwo,190,100,50,Psiquico,Psíquico,No evoluciona,0, Mewtwo es un Pokémon legendario de tipo Psíquico, creado científicamente y poseedor de poderes psíquicos asombrosos, lo que lo convierte en uno de los más poderosos
+Articuno,170,80,60,Hielo,Puño Hielo,No evoluciona,0, Articuno es uno de los tres pájaros legendarios de la región, de tipo Hielo. Es conocido por su belleza y su habilidad para controlar las tormentas de nieve
+Rattata,60,20,10,Normal,Mordisco,Raticate,1, Rattata es un Pokémon pequeño y ágil de tipo Normal, que ataca con rapidez y puede morder a sus oponentes con fuerza
+Raticate,80,40,35,Normal,Colmillo Rápido,No evoluciona,0, Raticate es la evolución de Rattata. Es más fuerte y agresivo, conocido por sus colmillos afilados y su velocidad en combate
+Sandshrew,120,40,45,Tierra,Cavar,Sandslash,1, Sandshrew es un Pokémon de tipo Tierra que se especializa en cavar túneles. Su habilidad de escavar le permite moverse rápidamente bajo tierra
+Oddish,70,50,55,Planta,Látigo Cepa,Gloom,1, Oddish es un Pokémon de tipo Planta que tiene la habilidad de absorber la luz solar para crecer. Su aspecto es parecido al de una pequeña planta con hojas
+Gloom,80,60,65,Planta,Bola Sombra,Vileplume,2, Gloom es la evolución de Oddish, un Pokémon de tipo Planta que puede liberar esporas y utilizar ataques como Bola Sombra para defenderse
+Vileplume,100,70,70,Planta/Rayo Solar,No evoluciona,0, Vileplume es la evolución final de Oddish, conocida por su enorme flor en su cabeza que libera polen venenoso
+Diglett,50,40,25,Tierra,Ataque Arena,Dugtrio,1, Diglett es un Pokémon pequeño de tipo Tierra que se especializa en cavar túneles bajo tierra, moviéndose rápidamente de un lugar a otro
+Dugtrio,80,70,50,Tierra,Cavar,No evoluciona,0, Dugtrio es la evolución de Diglett, con tres versiones de él que aparecen juntos, capaces de crear zanjas profundas con gran rapidez
+Psyduck,100,55,45,Agua,Psiquico,Golduck,1, Psyduck es un Pokémon de tipo Agua y Psíquico que sufre dolores de cabeza constantes, los cuales lo hacen impredecible en combate
+Golduck,140,70,60,Agua,Hydro Pump,No evoluciona,0, Golduck es la evolución de Psyduck, un Pokémon con habilidades psíquicas poderosas y una gran destreza en el agua
+Mankey,100,50,40,Lucha,Puño Karate,Primeape,1, Mankey es un Pokémon de tipo Lucha, conocido por su temperamento irritable y su rapidez para atacar con puños karate
+Primeape,130,70,50,Lucha,Golpe Furia,No evoluciona,0, Primeape es la evolución de Mankey, más fuerte y agresivo, capaz de realizar múltiples ataques rápidos en combate
+Growlithe,110,60,50,Fuego,Llamarada,Arcanine,1, Growlithe es un Pokémon de tipo Fuego con una lealtad impresionante y una gran habilidad para usar ataques de fuego como Llamarada
+Arcanine,160,90,70,Fuego,Rugido,No evoluciona,0, Arcanine es la evolución de Growlithe, un Pokémon majestuoso y poderoso, con una gran capacidad para utilizar ataques de fuego
+Poliwag,90,30,25,Agua,Chorro de Agua,Poliwhirl,1, Poliwag es un Pokémon de tipo Agua que se distingue por su cola en forma de espiral, siendo ágil y rápido en el agua
+Poliwhirl,120,50,45,Agua,Puño Hielo,Poliwrath,2, Poliwhirl es la evolución de Poliwag, y puede utilizar movimientos como Puño Hielo para congelar a sus oponentes durante el combate
+Poliwrath,180,70,80,Agua/Lucha,Terremoto,No evoluciona,0, Poliwrath es la evolución final de Poliwag, un Pokémon de tipo Agua y Lucha, con una gran fuerza física y la capacidad de realizar ataques como Terremoto
+Farfetch'd,90,55,50,Normal,Corte,No evoluciona,0, Farfetch'd es un Pokémon de tipo Normal que lleva un puerro como arma, y es conocido por su habilidad para atacar con Corte
+Krabby,100,50,70,Agua,Tenaza,Kingler,1, Krabby es un Pokémon de tipo Agua con pinzas extremadamente fuertes, capaces de causar daño con su ataque Tenaza
+Kingler,140,80,90,Agua,Martillazo,No evoluciona,0, Kingler es la evolución de Krabby, un Pokémon poderoso con pinzas gigantes, especializado en ataques acuáticos como Martillazo
+Voltorb,80,50,40,Eléctrico,Explosión,Electrode,1, Voltorb es un Pokémon de tipo Eléctrico que se asemeja a una esfera, capaz de liberar energía eléctrica y provocar explosiones
+Electrode,100,80,60,Eléctrico,Impactrueno,No evoluciona,0, Electrode es la evolución de Voltorb, con un cuerpo esférico y una gran habilidad para liberar grandes cantidades de electricidad
+Exeggcute,90,60,45,Planta,Bomba Huevo,Exeggutor,1, Exeggcute es un grupo de huevos que funcionan como un solo Pokémon de tipo Planta, utilizando ataques como Bomba Huevo para protegerse
+Exeggutor,160,85,80,Planta/Psiquico,Rayo Solar,No evoluciona,0, Exeggutor es la evolución de Exeggcute, un Pokémon de tipo Planta y Psíquico, capaz de utilizar ataques devastadores como Rayo Solar
+Cubone,100,40,60,Tierra,Hueso Palo,Marowak,1, Cubone es un Pokémon de tipo Tierra que lleva un hueso como arma, y se caracteriza por su tristeza al haber perdido a su madre
+Marowak,130,60,80,Tierra,Lanzar Hueso,No evoluciona,0, Marowak es la evolución de Cubone, un Pokémon fuerte que utiliza su hueso en combate, lanzándolo a gran velocidad
+Hitmonlee,140,120,50,Lucha,Patada Alta,No evoluciona,0, Hitmonlee es un Pokémon de tipo Lucha, conocido por sus poderosas patadas y su habilidad para luchar de pie o en el aire
+Hitmonchan,140,50,120,Lucha,Puño Fuego,No evoluciona,0, Hitmonchan es un Pokémon de tipo Lucha con gran habilidad para usar puños, en especial su ataque Puño Fuego
+Lickitung,150,60,75,Normal,Lamer,No evoluciona,0, Lickitung es un Pokémon de tipo Normal, famoso por su lengua larga y pegajosa, que usa para lamer objetos y a sus oponentes
+Koffing,90,40,65,Veneno,Gas Veneno,Weezing,1, Koffing es un Pokémon de tipo Veneno, que libera gases venenosos, lo que lo convierte en un peligro para sus enemigos
+Weezing,130,60,85,Veneno,Humo Doble,No evoluciona,0, Weezing es la evolución de Koffing, un Pokémon de tipo Veneno con dos cuerpos que liberan gases venenosos a gran escala
+Rhyhorn,140,60,75,Tierra/Roca,Golpe Cabeza,Rhydon,1, Rhyhorn es un Pokémon de tipo Tierra y Roca que usa su poderoso cuerno y su enorme cuerpo para golpear a sus rivales con su ataque Golpe Cabeza
+Rhydon,160,85,100,Tierra/Roca,Terremoto,No evoluciona,0, Rhydon es la evolución de Rhyhorn, un Pokémon robusto que usa su fuerza y el movimiento Terremoto para causar gran daño
+Chansey,250,20,80,Normal,Cura Natural,No evoluciona,0, Chansey es un Pokémon de tipo Normal, conocido por su capacidad para sanar a otros y por su naturaleza amable
+Tangela,100,60,80,Planta,Látigo Cepa,No evoluciona,0, Tangela es un Pokémon de tipo Planta, cubierto por una masa de raíces y vides, capaz de utilizar Látigo Cepa en combate
+Kangaskhan,180,80,80,Normal,Golpe Cometa,No evoluciona,0, Kangaskhan es un Pokémon de tipo Normal, que lleva a su cría en una bolsa en su abdomen y utiliza su fuerza para realizar ataques como Golpe Cometa
+Horsea,80,50,40,Agua,Chorro de Agua,Seadra,1, Horsea es un Pokémon de tipo Agua, pequeño pero ágil, que utiliza el Chorro de Agua para atacar y defenderse
+Seadra,120,70,60,Agua,Hydro Pump,No evoluciona,0, Seadra es la evolución de Horsea, un Pokémon de tipo Agua que puede disparar Hydro Pump con gran fuerza y precisión
+Goldeen,90,45,40,Agua,Pico Taladro,Seaking,1, Goldeen es un Pokémon de tipo Agua con una hermosa aleta en forma de corona, que usa su ataque Pico Taladro para luchar
+Seaking,130,65,60,Agua,Hydro Pump,No evoluciona,0, Seaking es la evolución de Goldeen, un Pokémon de tipo Agua con una gran habilidad para utilizar Hydro Pump
+Staryu,90,50,45,Agua,Burbuja Starmie,1, Staryu es un Pokémon de tipo Agua con forma de estrella, que utiliza su ataque Burbuja para defenderse y atacar a sus rivales
+Starmie,110,70,65,Agua/Psiquico,Rayo,No evoluciona,0, Starmie es la evolución de Staryu, un Pokémon de tipo Agua y Psíquico, conocido por su habilidad para usar Rayo y otras técnicas psíquicas
+Mr. Mime,110,65,65,Psiquico/Bicho,Barrera,No evoluciona,0, Mr. Mime es un Pokémon de tipo Psiquico/Bicho, conocido por crear barreras invisibles con sus manos para protegerse de los ataques
+Scyther,140,110,80,Bicho/Volador,Corte Filo,No evoluciona,0, Scyther es un Pokémon de tipo Bicho y Volador, con alas de insecto y unas afiladas cuchillas en sus brazos para atacar
+Jynx,130,50,75,Hielo/Psiquico,Rayo Hielo,No evoluciona,0, Jynx es un Pokémon de tipo Hielo y Psiquico, que utiliza el poder del Rayo Hielo para atacar a sus enemigos
+Electabuzz,140,80,70,Eléctrico,Impactrueno,No evoluciona,0, Electabuzz es un Pokémon de tipo Eléctrico, conocido por su agilidad y habilidad para generar descargas eléctricas con su cuerpo
+Magmar,140,90,80,Fuego,Pirotecnia,No evoluciona,0, Magmar es un Pokémon de tipo Fuego, cuya capacidad para generar llamas y su temperamento explosivo lo convierten en un formidable adversario
+Pinsir,150,125,100,Bicho,Machada,No evoluciona,0, Pinsir es un Pokémon de tipo Bicho, caracterizado por sus poderosos cuernos y su habilidad para realizar ataques contundentes como Machada
+Tauros,150,100,95,Normal,Embate,No evoluciona,0, Tauros es un Pokémon de tipo Normal, conocido por su gran fuerza y velocidad, que utiliza el ataque Embate para embestir a sus rivales
+Lapras,180,85,85,Agua/Hielo,Rayo Hielo,No evoluciona,0, Lapras es un Pokémon de tipo Agua y Hielo, famoso por su gran resistencia y su habilidad para usar Rayo Hielo en combate
+Ditto,48,48,48,Normal,Transformación,No evoluciona,0, Ditto es un Pokémon de tipo Normal, conocido por su habilidad para transformarse en cualquier otro Pokémon que vea
+Porygon,130,75,70,Normal,Conversion,No evoluciona,0, Porygon es un Pokémon de tipo Normal, capaz de cambiar su forma y adaptarse a cualquier situación utilizando su habilidad Conversion
+Omanyte,90,40,55,Roca/Agua,Golpe Concha,Omastar,1, Omanyte es un Pokémon de tipo Roca y Agua, con una concha en espiral, que usa el Golpe Concha para defenderse y atacar
+Omastar,140,70,90,Roca/Agua,Hidro Bomba,No evoluciona,0, Omastar es la evolución de Omanyte, un Pokémon de tipo Roca y Agua con poderosos ataques como Hidro Bomba
+Kabuto,80,60,55,Roca/Agua,Absorción,Kabutops,1, Kabuto es un Pokémon de tipo Roca y Agua, con una armadura de concha dura y la capacidad de absorber energía a través de su ataque Absorción
+Kabutops,140,85,100,Roca/Agua,Tajo Cortante,No evoluciona,0, Kabutops es la evolución de Kabuto, un Pokémon ágil y peligroso, con afiladas garras que utiliza en su ataque Tajo Cortante
+Aerodactyl,160,105,70,Roca/Volador,Garra Dragón,No evoluciona,0, Aerodactyl es un Pokémon de tipo Roca y Volador, conocido por su velocidad y su capacidad para atacar con Garra Dragón
+Snorlax,180,85,110,Normal,Descanso,No evoluciona,0, Snorlax es un Pokémon de tipo Normal, famoso por su gran tamaño, su fuerza y su habilidad para descansar y recuperar energía
+Zapdos,170,125,90,Eléctrico/Volador,Trueno,No evoluciona,0, Zapdos es un Pokémon de tipo Eléctrico y Volador, conocido por su poder destructivo y su capacidad para lanzar el devastador Trueno
+Moltres,170,125,90,Fuego/Volador,Llamarada,No evoluciona,0, Moltres es un Pokémon de tipo Fuego y Volador, reconocido por su habilidad para controlar las llamas y su ataque Llamarada
+Dratini,90,50,45,Dragón,Giro Dragón,Dragonair,1, Dratini es un Pokémon de tipo Dragón, conocido por su naturaleza tranquila y su habilidad para usar el ataque Giro Dragón
+Dragonair,120,75,70,Dragón,Ventisca,Dragonite,2, Dragonair es la evolución de Dratini, un Pokémon de tipo Dragón que puede invocar tormentas con su habilidad Ventisca
+Dragonite,180,100,100,Dragón/Volador,Furia Dragón,No evoluciona,0, Dragonite es la evolución final de Dratini, un poderoso Pokémon de tipo Dragón y Volador, con una gran fuerza y habilidad para utilizar Furia Dragón
+Mew,100,100,100,Psiquico,Poder Oculto,No evoluciona,0, Mew es un Pokémon de tipo Psiquico, conocido por su habilidad para aprender cualquier movimiento y su poder oculto
+Golem,200,120,130,Roca/Tierra,Terremoto,No evoluciona,0, Golem es un Pokémon de tipo Roca y Tierra, con un cuerpo increíblemente resistente y el poder de causar terremotos devastadores
+Steelix,150,85,200,Acero/Tierra,Cola Férrea,No evoluciona,0, Steelix es un Pokémon de tipo Acero y Tierra, con un cuerpo metálico resistente y la capacidad de usar Cola Férrea en combate
+Sandslash,150,100,120,Tierra,Cuchillada,No evoluciona,0, Sandslash es un Pokémon de tipo Tierra, conocido por sus afiladas garras y su habilidad para realizar ataques rápidos como Cuchillada
