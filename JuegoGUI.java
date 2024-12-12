@@ -78,6 +78,12 @@ public class JuegoGUI extends JFrame {
         // Panel derecho para el área de texto
         JPanel panelTexto = new JPanel(new BorderLayout());
         textArea = new JTextArea();
+        textArea.setBackground(new Color(245, 245, 220)); // Fondo beige claro
+        textArea.setForeground(new Color(50, 50, 50)); // Texto gris oscuro
+        textArea.setFont(new Font("Serif", Font.PLAIN, 16)); // Fuente Serif, tamaño 16
+        textArea.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 2)); // Borde del área de texto
+        textArea.setEditable(false);
+        
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         panelTexto.add(scrollPane, BorderLayout.CENTER);
@@ -96,9 +102,13 @@ public class JuegoGUI extends JFrame {
         btnCapturarPokemon.setVisible(true);
 
         panelBotones.add(btnSeleccionarCriatura);
+        estilizarBoton(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
+        estilizarBoton(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
+        estilizarBoton(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
+        estilizarBoton(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
 
         // Inicialización del juego
@@ -144,6 +154,13 @@ public class JuegoGUI extends JFrame {
             imagenVersus.setText("VS");
             imagenVersus.setHorizontalAlignment(JLabel.CENTER);
         }
+    }
+    private void estilizarBoton(JButton boton) {
+        boton.setBackground(new Color(34, 139, 34)); // Verde oscuro
+        boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Arial", Font.BOLD, 14));
+        boton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        boton.setFocusPainted(false);
     }
 
     private void actualizarImagenes() {
