@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import javax.swing.*;
-
+import javafx.stage.Stage;
 public class JuegoGUI extends JFrame {
     private Entrenador entrenador1;
     private Criatura criaturaSeleccionada;
@@ -19,7 +19,7 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
     private static final String RUTA_IMAGENES = "Imagenes/";
-
+    private PokedexGUI pokedexGUI = null;
     @SuppressWarnings("unused")
     public JuegoGUI() {
         setTitle("Juego de Criaturas");
@@ -317,19 +317,14 @@ public void seleccionarYGenerarEquipos() {
     mostrarEquipo(entrenadorRival.getEquipo());
 }
 
-    private void mostrarPokedex() {
-        Pokedex pokedex = new Pokedex(); // Crear una instancia de Pokedex
-        
-        // Agregar criaturas a la Pokedex desde la colección del jugador
-        for (Criatura criatura : entrenador1.getColeccion()) {
-            pokedex.agregarCriatura(criatura);
-        }
-        
-        // Mostrar todas las criaturas en la Pokedex
-        pokedex.mostrarPokedex();
+private void mostrarPokedex() {
+    if (pokedexGUI == null) {
+        // Llama a la GUI de la Pokédex en el hilo JavaFX
+        PokedexGUI.mostrarPokedexGUI(pokedex);
+        pokedexGUI = new Object(); // Solo para evitar múltiples aperturas
     }
-    
-  
+}
+
     public void crearEntrenadorRival() {
         entrenadorRival = new Entrenador("Rival");
     
