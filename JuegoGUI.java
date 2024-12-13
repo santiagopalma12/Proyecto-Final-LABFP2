@@ -181,18 +181,17 @@ public class JuegoGUI extends JFrame {
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
             imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } else {
+        } 
+        else
             imagenCriaturaSeleccionada.setIcon(null);
-        }
-    
         if (enemigo != null) {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
             imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } else {
+        } 
+        else
             imagenEnemigo.setIcon(null);
-        }
     }
     private void estilizarBoton(JButton boton) {
         boton.setBackground(new Color(34, 139, 34)); // Verde oscuro
@@ -491,6 +490,7 @@ private List<Criatura> generarEquipoEmparejado(List<Criatura> coleccionRival, Li
 }
 
 private int obtenerOpcionValida() {
+    @SuppressWarnings("resource")
     Scanner scanner = new Scanner(System.in);
     int opcion;
     do {
@@ -608,9 +608,6 @@ private void mostrarEquipo(List<Criatura> equipo) {
             JOptionPane.INFORMATION_MESSAGE);
     }
  
-
-    
-    
     private void guardarProgreso() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("progreso.dat"))) {
             out.writeObject(entrenador1);  // Guardar el entrenador (y sus criaturas)
