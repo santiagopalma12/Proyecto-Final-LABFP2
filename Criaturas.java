@@ -1,41 +1,59 @@
 public class Criatura {
     private String nombre;
     private int salud;
+    private int saludMaxima; // Atributo para almacenar la salud máxima
     private int ataque;
     private int defensa;
     private String tipo;
     private String habilidad;
     private String evolucion;
+    private String rutaImagen;
+    private int combatesGanados;
     
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
-    // Nuevo atributo para almacenar los combates ganados
-    private int combatesGanados;
 
     // Constructor original
-    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion) {
+    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion, String rutaImagen) {
         this.nombre = nombre;
         this.salud = salud;
+        this.saludMaxima = salud; // Inicializar salud máxima al valor inicial de salud
         this.ataque = ataque;
         this.defensa = defensa;
         this.tipo = tipo;
         this.habilidad = habilidad;
         this.evolucion = evolucion;
-        this.combatesGanados = 0; //Inicializamos en 0
+        this.rutaImagen = rutaImagen;
+        this.combatesGanados = 0;
     }
-    public int getCombatesGanados(){
+
+    // Métodos getter y setter para los atributos
+    public void curar(int cantidad) {
+        salud = Math.min(salud + cantidad, saludMaxima); // Usar salud máxima del Pokémon
+    }
+
+    public int getCombatesGanados() {
         return combatesGanados;
     }
-    public void incrementarCombatesGanados(){
+
+    public void incrementarCombatesGanados() {
         combatesGanados++;
     }
-    // Métodos getter y setter para los atributos
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public int getSalud() {
         return salud;
+    }
+
+    public int getSaludMaxima() {
+        return saludMaxima; // Método getter para salud máxima
     }
 
     public int getAtaque() {
@@ -61,28 +79,24 @@ public class Criatura {
     public int getPuntaje() {
         return puntaje;
     }
+    
     public void calcularPuntaje() {
         this.puntaje = salud + ataque + defensa;
     }
-    
 
     // Método setter para el puntaje
     public void setPuntaje(int puntaje) {
         this.puntaje = puntaje;
     }
-    @Override
+
     public String toString() {
-        return nombre + " (Tipo: " + tipo + ", Salud: " + salud + ", Ataque: " + ataque + ", Defensa: " + defensa + ", Habilidad: " + habilidad + ", Evoluciona a: " + evolucion + ")";
+        return nombre + " (Tipo: " + tipo + ", Salud: " + salud + "/" + saludMaxima + ", Ataque: " + ataque + ", Defensa: " + defensa + ", Habilidad: " + habilidad + ", Evoluciona a: " + evolucion + ")";
     }
+
     public void atacar(Criatura objetivo) {
-        // El daño es calculado según el ataque de esta criatura menos la defensa del objetivo
-        int daño = this.ataque - objetivo.getDefensa();
-        if (daño > 0) {
-            objetivo.recibirDaño(daño);
-            System.out.println(this.nombre + " ataca a " + objetivo.getNombre() + " causando " + daño + " de daño.");
-        } else {
-            System.out.println(this.nombre + " ataca a " + objetivo.getNombre() + " pero no causa daño.");
-        }
+        int daño = Math.max(this.ataque - objetivo.getDefensa(), 1); // Mínimo 1 de daño
+        objetivo.recibirDaño(daño);
+        System.out.println(this.nombre + " ataca a " + objetivo.getNombre() + " causando " + daño + " de daño.");
     }
 
     // Método para recibir daño
@@ -93,7 +107,4 @@ public class Criatura {
         }
         System.out.println(this.nombre + " ahora tiene " + this.salud + " de salud.");
     }
-
-
 }
-
