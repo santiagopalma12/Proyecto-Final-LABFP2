@@ -29,7 +29,7 @@ public class PokedexSwing {
         // Configuración de la ventana principal
         frame = new JFrame("Pokédex");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 450);
+        frame.setSize(800, 500);
         frame.setLayout(new BorderLayout());
     
         // Panel con imagen de fondo
@@ -54,22 +54,22 @@ public class PokedexSwing {
     
         // Labels para la información básica con espaciado
         lblNombre = new JLabel("Nombre: ");
-        lblNombre.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
+        lblNombre.setFont(new Font("DialogInput", Font.BOLD, 30));  // Cambiar fuente a DialogInput
         lblNombre.setForeground(Color.WHITE);  // Letras blancas
         lblNombre.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));  // Añadir margen
     
         lblSalud = new JLabel("Salud: ");
-        lblSalud.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
+        lblSalud.setFont(new Font("DialogInput", Font.BOLD,20));  // Cambiar fuente a DialogInput
         lblSalud.setForeground(Color.WHITE);  // Letras blancas
         lblSalud.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));  // Añadir margen
     
         lblAtaque = new JLabel("Ataque: ");
-        lblAtaque.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
+        lblAtaque.setFont(new Font("DialogInput", Font.BOLD, 20));  // Cambiar fuente a DialogInput
         lblAtaque.setForeground(Color.WHITE);  // Letras blancas
         lblAtaque.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));  // Añadir margen
     
         lblDefensa = new JLabel("Defensa: ");
-        lblDefensa.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
+        lblDefensa.setFont(new Font("DialogInput", Font.BOLD, 20));  // Cambiar fuente a DialogInput
         lblDefensa.setForeground(Color.WHITE);  // Letras blancas
         lblDefensa.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));  // Añadir margen
     
@@ -89,8 +89,15 @@ public class PokedexSwing {
         panelSuperior.add(panelImagenDerecha);
     
         // Panel inferior con espaciado
-        JPanel panelInferior = new JPanel(new GridLayout(4, 1));
-        panelInferior.setBackground(new Color(0, 0, 0, 0));  // Fondo transparente
+        JPanel panelInferior = new JPanel(new GridLayout(4, 1)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new Color(0, 0, 0, 50)); // Transparencia
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        panelInferior.setOpaque(false);
     
         lblTipo = new JLabel("Tipo: ");
         lblTipo.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
@@ -123,7 +130,7 @@ public class PokedexSwing {
             comboBox.addItem(criatura.getNombre());
         }
         comboBox.setFont(new Font("DialogInput", Font.BOLD, 14));  // Cambiar fuente a DialogInput
-        comboBox.setForeground(Color.WHITE);  // Letras blancas
+        comboBox.setForeground(Color.BLACK);  // Letras blancas
         comboBox.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));  // Añadir margen
     
         comboBox.addActionListener(new ActionListener() {
@@ -145,9 +152,6 @@ public class PokedexSwing {
         frame.setVisible(true);
     }
     
-    
-    
-
     private void actualizarInformacion(String nombre) {
         Criatura criatura = obtenerCriaturaPorNombre(nombre);
         if (criatura != null) {
@@ -162,7 +166,7 @@ public class PokedexSwing {
 
             // Actualizar imagen
             ImageIcon icon = new ImageIcon(criatura.getRutaImagen());
-            Image imagen = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            Image imagen = icon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
             lblImagen.setIcon(new ImageIcon(imagen));
         }
     }
