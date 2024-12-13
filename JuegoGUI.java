@@ -549,7 +549,7 @@ private void mostrarEquipo(List<Criatura> equipo) {
         actualizarTexto();
     }
     
-    public void seleccionarEquipoInicial() {
+    private void seleccionarEquipoInicial() {
         List<Criatura> coleccion = entrenador1.getColeccion();
     
         if (coleccion.size() < 3) {
@@ -609,32 +609,14 @@ private void mostrarEquipo(List<Criatura> equipo) {
     }
  
     private void guardarProgreso() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar progreso de la partida");
-        int opcion = fileChooser.showSaveDialog(this);
-        if (opcion == JFileChooser.APPROVE_OPTION) {
-            File archivo = fileChooser.getSelectedFile();
-    
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
-                // Guardar datos del jugador
-                for (Criatura c : entrenador1.getEquipo()) {
-                    writer.write(c.getNombre() + "," + c.getSalud() + "," + c.getAtaque() + "," + c.getDefensa() + ",");
-                }
-                writer.newLine();
-                
-                // Guardar datos del enemigo
-                for (Criatura c : entrenadorRival.getEquipo()) {
-                    writer.write(c.getNombre() + "," + c.getSalud() + ",");
-                }
-                writer.newLine();
-    
-                JOptionPane.showMessageDialog(this, "Progreso guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Error al guardar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("progreso.dat"))) {
+            out.writeObject(entrenador1);  // Guardar el entrenador (y sus criaturas)
+            JOptionPane.showMessageDialog(this, "Progreso guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el progreso", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-     
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
         

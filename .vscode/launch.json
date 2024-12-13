@@ -6,13 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "MenuPrincipal",
-            "request": "launch",
-            "mainClass": "MenuPrincipal",
-            "projectName": "Proyecto-Final-LABFP2_913715a0"
-        },
-        {
-            "type": "java",
             "name": "PokedexSwing",
             "request": "launch",
             "mainClass": "PokedexSwing",
