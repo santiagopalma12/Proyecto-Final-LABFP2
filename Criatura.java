@@ -8,7 +8,6 @@ public class Criatura {
     private String evolucion;
     private String rutaImagen;
     private int combatesGanados;
-    private int saludMaxima;
     private String descripcion;
     
     // Nuevo atributo para almacenar el puntaje de la criatura
