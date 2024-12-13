@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +6,18 @@ public class Entrenador implements Serializable {
     private String nombre;
     private List<Criatura> equipo;
     private List<Criatura> coleccion;
+    private Pokedex pokedex; // Instancia de la Pokedex
     private int pocionesCuracion = 5; // Número de pociones de curación disponibles
 
+    // Constructor
     public Entrenador(String nombre) {
         this.nombre = nombre;
         this.equipo = new ArrayList<>();
         this.coleccion = new ArrayList<>();
+        this.pokedex = new Pokedex(); // Inicializar la Pokédex
     }
+
+    // Métodos relacionados con pociones
     public boolean usarPocionCuracion(Criatura criatura, int cantidad) {
         if (pocionesCuracion >= cantidad) {
             int totalCuracion = cantidad * 20;
@@ -27,6 +31,7 @@ public class Entrenador implements Serializable {
         }
     }
 
+    // Métodos para manejar criaturas
     public void capturarCriatura(Criatura criatura) {
         if (equipo.size() < 3) {
             equipo.add(criatura);
@@ -34,11 +39,13 @@ public class Entrenador implements Serializable {
             System.out.println("No puedes tener más de 3 criaturas en tu equipo.");
         }
     }
+
     public void agregarAColeccion(Criatura criatura) {
         coleccion.add(criatura);
+        pokedex.agregarCriatura(criatura); // Agregar la criatura a la Pokédex
     }
-    
 
+    // Setters y Getters
     public void setEquipo(List<Criatura> equipo) {
         this.equipo = equipo;
     }
@@ -50,11 +57,16 @@ public class Entrenador implements Serializable {
     public String getNombre() {
         return nombre;
     }
+
     public List<Criatura> getColeccion() {
         return coleccion;
     }
-        // Getters para pociones
+
     public int getPocionesCuracion() {
-         return pocionesCuracion;
+        return pocionesCuracion;
+    }
+
+    public Pokedex getPokedex() {
+        return pokedex;
     }
 }
