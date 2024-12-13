@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +8,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import javax.swing.*;
-import javafx.stage.Stage;
+
+@SuppressWarnings("unused")
 public class JuegoGUI extends JFrame {
     private Entrenador entrenador1;
     private Criatura criaturaSeleccionada;
@@ -18,39 +21,48 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
+    private Pokedex pokedex;
     private static final String RUTA_IMAGENES = "Imagenes/";
-    private PokedexGUI pokedexGUI = null;
+
     @SuppressWarnings("unused")
     public JuegoGUI() {
+        // Configuración básica de la ventana principal
         setTitle("Juego de Criaturas");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
     
+        // Área de texto con scroll
         textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
     
+        // Panel de botones
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
         btnAtacar = new JButton("Atacar");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         btnCapturarPokemon.setVisible(false);
-    
+
+        // Botón para abrir la Pokédex
+        JButton btnVerPokedex = new JButton("Ver Pokédex");
+        btnVerPokedex.addActionListener(e -> mostrarPokedex());
         panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
-        add(panelBotones, BorderLayout.SOUTH);
-        JButton btnVerPokedex = new JButton("Ver Pokédex");
         panelBotones.add(btnVerPokedex);
-        btnVerPokedex.addActionListener(e -> mostrarPokedex());
 
+        add(panelBotones, BorderLayout.SOUTH);
+
+        // Inicialización de entrenadores y Pokédex
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
-    
+        pokedex = new Pokedex();
+
+        // Cargar criaturas desde archivo y preparar el juego
         cargarCriaturasDesdeArchivo("criaturas.txt");
         seleccionarEquipoInicial(); // Invocar el menú de selección
         crearEntrenadorRival();
@@ -132,7 +144,14 @@ public class JuegoGUI extends JFrame {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                
+    
+                if (datos.length < 9) { // Validar que existan suficientes columnas en cada línea
+                    JOptionPane.showMessageDialog(this, "Datos incompletos en la línea: " + linea, 
+                                                  "Error", JOptionPane.WARNING_MESSAGE);
+                    continue; // Saltar a la siguiente línea
+                }
+    
+                // Extracción de datos
                 String nombre = datos[0];
                 int salud = parseIntSeguro(datos[1]);
                 int ataque = parseIntSeguro(datos[2]);
@@ -141,14 +160,21 @@ public class JuegoGUI extends JFrame {
                 String habilidad = datos[5];
                 String evolucion = datos[6];
                 String rutaImagen = RUTA_IMAGENES + nombre + " delante.png";
-                String descripcion = datos[8]; // Nueva columna de descripción
-
+                String descripcion = datos[8];
+    
+                // Creación de la criatura
                 Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion, rutaImagen, descripcion);
-
-                entrenador1.agregarAColeccion(criatura); // Solo agregar a la colección
+    
+                // Agregar a la Pokédex y a la colección del entrenador
+                pokedex.agregarCriatura(criatura);
+                entrenador1.agregarAColeccion(criatura);
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de datos numéricos: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -318,11 +344,12 @@ public void seleccionarYGenerarEquipos() {
 }
 
 private void mostrarPokedex() {
-    if (pokedexGUI == null) {
-        // Llama a la GUI de la Pokédex en el hilo JavaFX
-        PokedexGUI.mostrarPokedexGUI(pokedex);
-        pokedexGUI = new Object(); // Solo para evitar múltiples aperturas
-    }
+    if (pokedex != null && !pokedex.getCriaturas().isEmpty())
+        // Llamar a la GUI de PokedexSwing
+        SwingUtilities.invokeLater(() -> new PokedexSwing(pokedex));
+    else
+        JOptionPane.showMessageDialog(this, "La Pokédex no contiene criaturas o no está inicializada.", 
+                                      "Error", JOptionPane.ERROR_MESSAGE);
 }
 
     public void crearEntrenadorRival() {
@@ -521,9 +548,6 @@ private int obtenerOpcionValida() {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JuegoGUI game = new JuegoGUI();
-            game.setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
     }
 }
