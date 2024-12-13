@@ -4,6 +4,10 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.*;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 @SuppressWarnings("unused")
 public class JuegoGUI extends JFrame {
@@ -19,6 +23,7 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
+    private JLabel efectoAtaque;
     private Pokedex pokedex;
     
     private static final String RUTA_IMAGENES = "Imagenes/";
@@ -90,13 +95,19 @@ public JuegoGUI() {
         imagenVersus = new JLabel(); 
         imagenVersus.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
         cargarImagenVersus(); // Ahora este método tiene un objeto inicializado para trabajar
-    
+        // Crear el JLabel para el efecto del ataque
+        efectoAtaque = new JLabel();
+        efectoAtaque.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        efectoAtaque.setVisible(false); // Inicialmente oculto
+
         // Configurar posición y agregar imagenVersus al JLayeredPane
         int anchoDisponible = getWidth() / 2; // La mitad izquierda
         int centroX = anchoDisponible / 2 - 50; // Ajustar horizontalmente dentro de esa mitad
         int centroY = getHeight() / 2 - 50; // Centrar verticalmente
         imagenVersus.setBounds(centroX-120, centroY, 400, 300);
-        layeredPane.add(imagenVersus, Integer.valueOf(2)); // Capa superior
+        efectoAtaque.setBounds(centroX - 120, centroY - 100, 400, 300);  // Ajusta 100 píxeles hacia arriba
+        layeredPane.add(imagenVersus, Integer.valueOf(2)); // Capa superiorÇ
+        layeredPane.add(efectoAtaque, Integer.valueOf(3));
     
             // Panel derecho (imagen del Pokémon enemigo y pociones)
         TransparentPanel panelDerecho = new TransparentPanel();
@@ -435,8 +446,42 @@ public JuegoGUI() {
 private void atacar() {
     if (criaturaSeleccionada != null && enemigo != null) {
         criaturaSeleccionada.atacar(enemigo);
-        textArea.append("\n" + criaturaSeleccionada.getNombre() + " ataca a " + enemigo.getNombre() + "!\n");
+         // Generar número aleatorio para seleccionar una imagen
+         Random random = new Random();
+         int numeroImagen = random.nextInt(5) + 1; // Genera un número entre 1 y 3
+         String rutaImagen = RUTA_IMAGENES + "efecto_ataque_" + numeroImagen + ".png";
+ 
+         // Mostrar la imagen del efecto
+         ImageIcon iconoEfecto = new ImageIcon(rutaImagen);
+         efectoAtaque.setIcon(new ImageIcon(iconoEfecto.getImage().getScaledInstance(
+             200,
+             200,
+             Image.SCALE_SMOOTH
+         )));
+         efectoAtaque.setVisible(true);
+ 
+         // Colocar el efecto justo por encima de la imagen del 'versus'
+         int xPos = imagenVersus.getX() + (random.nextInt(250) - 130);  // Desplazar aleatoriamente en el eje X, 50% más a la izquierda
+        int yPos = imagenVersus.getY() + (random.nextInt(20) - 10)-150;  // Desplazar aleatoriamente en el eje Y, entre -10 y 10 píxeles
+         xPos = Math.max(0, Math.min(xPos, getWidth() - efectoAtaque.getWidth()));
+         yPos = Math.max(0, Math.min(yPos, getHeight() +150- efectoAtaque.getHeight()));
 
+        efectoAtaque.setBounds(xPos, yPos, imagenVersus.getWidth(), imagenVersus.getHeight());
+        
+         // Asegurarse de que la imagen del efecto está en la capa correcta
+        
+         efectoAtaque.repaint();
+ 
+         // Ocultar la imagen después de 500 ms
+         Timer timer = new Timer(500, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 efectoAtaque.setVisible(false);
+             }
+         });
+         timer.setRepeats(false); // Solo ejecutar una vez
+         timer.start();
+ 
         if (enemigo.getSalud() <= 0) {
             textArea.append(enemigo.getNombre() + " ha sido derrotado!\n");
             criaturasVencidas.add(enemigo);
