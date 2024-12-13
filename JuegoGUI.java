@@ -179,8 +179,14 @@ public class JuegoGUI extends JFrame {
             imagenEnemigo.setIcon(null);
         }
     }
+    private void estilizarBoton(JButton boton) {
+        boton.setBackground(new Color(34, 139, 34)); // Verde oscuro
+        boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Arial", Font.BOLD, 14));
+        boton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        boton.setFocusPainted(false);
+    }
     
-
     private void actualizarTexto() {
         StringBuilder texto = new StringBuilder();
         texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
