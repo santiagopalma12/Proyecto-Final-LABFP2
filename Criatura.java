@@ -27,11 +27,12 @@ public class Criatura {
         this.combatesGanados = 0;
         this.descripcion = descripcion;
     }
-    public void curar(int puntos) {
-        this.salud = Math.min(salud + puntos, saludMaxima); // No puede exceder la salud máxima
-        System.out.println(nombre + " fue curado en " + puntos + " puntos. Salud actual: " + salud);
-    }
+
     // Métodos getter y setter para los atributos
+    public void curar(int cantidad) {
+        salud = Math.min(salud + cantidad, 100); // Salud máxima de 100
+    }
+
     public int getCombatesGanados() {
         return combatesGanados;
     }
@@ -115,4 +116,8 @@ public class Criatura {
         }
         System.out.println(this.nombre + " ahora tiene " + this.salud + " de salud.");
     }
+
+
 }
+
+
