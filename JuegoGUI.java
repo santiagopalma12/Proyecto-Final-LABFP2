@@ -316,15 +316,13 @@ public class JuegoGUI extends JFrame {
         }
         return false; // No se usó una poción
     }
-    private void actualizarImagenes() {
+
+private void actualizarImagenes() {
         if (criaturaSeleccionada != null) {
             ImageIcon icon = new ImageIcon(criaturaSeleccionada.getRutaImagen());
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
-            // Escalar al 125% del tamaño original
-            int anchoNuevo = (int) (anchoOriginal * 2.22);
-            int altoNuevo = (int) (altoOriginal * 2.22);
-            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoNuevo, altoNuevo, Image.SCALE_SMOOTH)));
+            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
         } else {
             imagenCriaturaSeleccionada.setIcon(null);
         }
@@ -333,16 +331,11 @@ public class JuegoGUI extends JFrame {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
-            // Escalar al 125% del tamaño original
-            int anchoNuevo = (int) (anchoOriginal * 3.22);
-            int altoNuevo = (int) (altoOriginal * 3.22);
-            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoNuevo, altoNuevo, Image.SCALE_SMOOTH)));
+            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
         } else {
             imagenEnemigo.setIcon(null);
         }
-    }
-    
-
+    } 
     private void actualizarTexto() {
         StringBuilder texto = new StringBuilder();
         texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
