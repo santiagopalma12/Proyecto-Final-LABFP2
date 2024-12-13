@@ -1,10 +1,13 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.*;
 
+@SuppressWarnings("unused")
 public class JuegoGUI extends JFrame {
     private Entrenador entrenador1;
     private Criatura criaturaSeleccionada;
@@ -18,9 +21,15 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
+<<<<<<< HEAD
     private static final String RUTA_IMAGENES = "Imagenes/";
 
+=======
+    private Pokedex pokedex;
+    private static final String RUTA_IMAGENES = "Imagenes/";
+>>>>>>> d5647c46bcd662a2b871182b8a10dad731d3fa7d
     public JuegoGUI() {
+
         // Configuración de la ventana
         setTitle("Juego de Criaturas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,18 +116,34 @@ public class JuegoGUI extends JFrame {
         btnAtacar = new JButton("Atacar");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
-        btnCapturarPokemon.setVisible(true);
 
+<<<<<<< HEAD
         panelBotones.add(btnSeleccionarCriatura);
+=======
+        // Botón para abrir la Pokédex
+        JButton btnVerPokedex = new JButton("Ver Pokédex");
+        btnVerPokedex.addActionListener(e -> mostrarPokedex());
+        panelBotones.add(btnSeleccionarCriatura);
+        btnCapturarPokemon.setVisible(true);
+        estilizarBoton(btnSeleccionarCriatura);
+>>>>>>> d5647c46bcd662a2b871182b8a10dad731d3fa7d
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
+<<<<<<< HEAD
+=======
+        estilizarBoton(btnCapturarPokemon);
+        panelBotones.add(btnVerPokedex);
+        estilizarBoton(btnVerPokedex);
+>>>>>>> d5647c46bcd662a2b871182b8a10dad731d3fa7d
         add(panelBotones, BorderLayout.SOUTH);
 
-        // Inicialización del juego
+        // Inicialización de entrenadores y Pokédex
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
+        pokedex = new Pokedex();
 
+        // Cargar criaturas desde archivo y preparar el juego
         cargarCriaturasDesdeArchivo("criaturas.txt");
         seleccionarEquipoInicial();
         crearEntrenadorRival();
@@ -166,18 +191,17 @@ public class JuegoGUI extends JFrame {
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
             imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } else {
+        } 
+        else
             imagenCriaturaSeleccionada.setIcon(null);
-        }
-    
         if (enemigo != null) {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
             int anchoOriginal = icon.getIconWidth();
             int altoOriginal = icon.getIconHeight();
             imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } else {
+        } 
+        else
             imagenEnemigo.setIcon(null);
-        }
     }
     
 
@@ -229,7 +253,14 @@ public class JuegoGUI extends JFrame {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                
+    
+                if (datos.length < 9) { // Validar que existan suficientes columnas en cada línea
+                    JOptionPane.showMessageDialog(this, "Datos incompletos en la línea: " + linea, 
+                                                  "Error", JOptionPane.WARNING_MESSAGE);
+                    continue; // Saltar a la siguiente línea
+                }
+    
+                // Extracción de datos
                 String nombre = datos[0];
                 int salud = parseIntSeguro(datos[1]);
                 int ataque = parseIntSeguro(datos[2]);
@@ -237,14 +268,22 @@ public class JuegoGUI extends JFrame {
                 String tipo = datos[4];
                 String habilidad = datos[5];
                 String evolucion = datos[6];
-    
                 String rutaImagen = RUTA_IMAGENES + nombre + " delante.png";
-                Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion, rutaImagen);
-
-                entrenador1.agregarAColeccion(criatura); // Solo agregar a la colección
+                String descripcion = datos[8];
+    
+                // Creación de la criatura
+                Criatura criatura = new Criatura(nombre, salud, ataque, defensa, tipo, habilidad, evolucion, rutaImagen, descripcion);
+    
+                // Agregar a la Pokédex y a la colección del entrenador
+                pokedex.agregarCriatura(criatura);
+                entrenador1.agregarAColeccion(criatura);
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar el archivo de criaturas: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de datos numéricos: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -313,7 +352,12 @@ private void evolucionarCriatura(Criatura criatura) {
                         datos[4],
                         datos[5],
                         datos[6],
+<<<<<<< HEAD
                         rutaImagenEvolucionada
+=======
+                        datos[7],
+                        datos[8]
+>>>>>>> d5647c46bcd662a2b871182b8a10dad731d3fa7d
                     
                 );
 
@@ -388,28 +432,51 @@ private void atacar() {
     }
 }
 
-
-
-
-    private void seleccionarYGenerarEquipos() {
+public void seleccionarYGenerarEquipos() {
+    // 1. Mostrar la Pokédex del jugador
     System.out.println("Elige tu equipo (hasta 3 Pokémon):");
-    mostrarColeccion(entrenador1.getColeccion());
+    entrenador1.getPokedex().mostrarPokedex();
 
+    // 2. Seleccionar el equipo del jugador
     List<Criatura> equipoJugador = new ArrayList<>();
     for (int i = 0; i < 3; i++) {
-        int opcion = obtenerOpcionValida();
-        equipoJugador.add(entrenador1.getColeccion().get(opcion - 1));
+        try {
+            int opcion = obtenerOpcionValida(); // Asume que devuelve un índice basado en entrada del usuario
+            Criatura seleccionada = entrenador1.getColeccion().get(opcion - 1);
+
+            if (equipoJugador.contains(seleccionada)) {
+                System.out.println("Ya seleccionaste este Pokémon. Elige otro.");
+                i--; // Permitir al usuario reintentar
+                continue;
+            }
+            equipoJugador.add(seleccionada);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Opción fuera de rango. Intenta nuevamente.");
+            i--; // Permitir al usuario reintentar
+        }
     }
     entrenador1.setEquipo(equipoJugador);
 
+    // 3. Generar el equipo del enemigo basado en el equipo del jugador
     List<Criatura> equipoEnemigo = generarEquipoEmparejado(entrenadorRival.getColeccion(), equipoJugador);
     entrenadorRival.setEquipo(equipoEnemigo);
 
+    // 4. Mostrar equipos
     System.out.println("Tu equipo:");
     mostrarEquipo(entrenador1.getEquipo());
     System.out.println("\nEquipo enemigo:");
     mostrarEquipo(entrenadorRival.getEquipo());
 }
+
+private void mostrarPokedex() {
+    if (pokedex != null && !pokedex.getCriaturas().isEmpty())
+        // Llamar a la GUI de PokedexSwing
+        SwingUtilities.invokeLater(() -> new PokedexSwing(pokedex));
+    else
+        JOptionPane.showMessageDialog(this, "La Pokédex no contiene criaturas o no está inicializada.", 
+                                      "Error", JOptionPane.ERROR_MESSAGE);
+}
+
 private void mostrarColeccion(List<Criatura> coleccion) {
     for (int i = 0; i < coleccion.size(); i++) {
         Criatura c = coleccion.get(i);
@@ -443,6 +510,7 @@ private List<Criatura> generarEquipoEmparejado(List<Criatura> coleccionRival, Li
 }
 
 private int obtenerOpcionValida() {
+    @SuppressWarnings("resource")
     Scanner scanner = new Scanner(System.in);
     int opcion;
     do {
@@ -500,32 +568,13 @@ private void mostrarEquipo(List<Criatura> equipo) {
     
         actualizarTexto();
     }
-    private void mostrarColeccion() {
-        List<Criatura> coleccion = entrenador1.getColeccion();
-    
-        if (coleccion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tu colección está vacía.", "Colección", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-    
-        StringBuilder sb = new StringBuilder("Tu colección de Pokémon:\n");
-        for (Criatura criatura : coleccion) {
-            sb.append("- ").append(criatura.getNombre())
-              .append(" | Salud: ").append(criatura.getSalud())
-              .append(" | Ataque: ").append(criatura.getAtaque())
-              .append(" | Defensa: ").append(criatura.getDefensa())
-              .append("\n");
-        }
-    
-        JOptionPane.showMessageDialog(this, sb.toString(), "Colección", JOptionPane.INFORMATION_MESSAGE);
-    }
     
     private void seleccionarEquipoInicial() {
         List<Criatura> coleccion = entrenador1.getColeccion();
     
         if (coleccion.size() < 3) {
             JOptionPane.showMessageDialog(this, 
-                "Tu colección debe tener al menos 3 Pokémon para formar un equipo.", 
+                "Debes tener al menos a 3 Pokémon para formar un equipo.", 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             return;
@@ -579,9 +628,6 @@ private void mostrarEquipo(List<Criatura> equipo) {
             JOptionPane.INFORMATION_MESSAGE);
     }
  
-
-    
-    
     private void guardarProgreso() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("progreso.dat"))) {
             out.writeObject(entrenador1);  // Guardar el entrenador (y sus criaturas)
@@ -592,9 +638,6 @@ private void mostrarEquipo(List<Criatura> equipo) {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JuegoGUI game = new JuegoGUI();
-            game.setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
     }
 }

@@ -8,12 +8,13 @@ public class Criatura {
     private String evolucion;
     private String rutaImagen;
     private int combatesGanados;
+    private String descripcion;
     
     // Nuevo atributo para almacenar el puntaje de la criatura
     private int puntaje;
 
     // Constructor original
-    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion, String rutaImagen) {
+    public Criatura(String nombre, int salud, int ataque, int defensa, String tipo, String habilidad, String evolucion, String rutaImagen, String descripcion) {
         this.nombre = nombre;
         this.salud = salud;
         this.ataque = ataque;
@@ -23,6 +24,7 @@ public class Criatura {
         this.evolucion = evolucion;
         this.rutaImagen = rutaImagen;
         this.combatesGanados = 0;
+        this.descripcion = descripcion;
     }
 
     // Métodos getter y setter para los atributos
@@ -75,6 +77,14 @@ public class Criatura {
     }
     public void calcularPuntaje() {
         this.puntaje = salud + ataque + defensa;
+    }
+    // Getters y setters para el nuevo campo
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
 
