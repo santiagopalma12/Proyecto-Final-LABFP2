@@ -1,7 +1,7 @@
 Pikachu,100,40,20,Eléctrico,Impactrueno,Raichu,1
 Raichu,120,60,50,Eléctrico,Rayo,No evoluciona,0
 Charmander,120,50,30,Fuego,Lanzallamas,Charmeleon,1
-Charmeleon,150,60,40,Fuego,Puño Fuego,Charizard,2
+Charmeleon,150,300,40,Fuego,Puño Fuego,Charizard,2
 Charizard,180,80,60,Fuego/Volador,Garra Dragón,No evoluciona,0
 Squirtle,110,30,40,Agua,Hydro Pump,War Tortle,1
 War Tortle,130,40,50,Agua,Hydro Pump,Blastoise,2
