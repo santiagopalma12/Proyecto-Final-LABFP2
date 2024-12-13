@@ -16,6 +16,7 @@ public class JuegoGUI extends JFrame {
     private Criatura enemigo;
     private JTextArea textArea;
     private JButton btnAtacar, btnSeleccionarCriatura, btnGuardarProgreso, btnCapturarPokemon;
+    private JButton btnNuevoCombate;
     private Entrenador entrenadorRival;
     private ArrayList<Criatura> criaturasVencidas = new ArrayList<>();
     private JButton[] pocionesJugador;
@@ -173,6 +174,7 @@ public JuegoGUI() {
         btnAtacar = new JButton("Atacar");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
+        btnNuevoCombate = new JButton("Nuevo Combate");
         JButton btnVerPokedex = new JButton("Ver Pokédex");
 
         btnVerPokedex.addActionListener(e -> mostrarPokedex());
@@ -181,11 +183,12 @@ public JuegoGUI() {
         panelBotones.add(btnSeleccionarCriatura);
         btnCapturarPokemon.setVisible(true);
         panelBotones.add(btnVerPokedex);
+        panelBotones.add(btnNuevoCombate);  
         estilizarBoton(btnVerPokedex);
         estilizarBoton(btnGuardarProgreso);
         estilizarBoton(btnSeleccionarCriatura);
         estilizarBoton(btnAtacar);
-
+        estilizarBoton(btnNuevoCombate);
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnGuardarProgreso);
@@ -206,7 +209,7 @@ public JuegoGUI() {
         btnAtacar.addActionListener(e -> atacar());
         btnGuardarProgreso.addActionListener(e -> guardarProgreso());
         btnCapturarPokemon.addActionListener(e -> capturarPokemon());
-    
+        btnNuevoCombate.addActionListener(e -> iniciarNuevoCombate());
         actualizarTexto();
         actualizarImagenes();
         setVisible(true);
@@ -442,7 +445,8 @@ public JuegoGUI() {
             JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
+
 private void atacar() {
     if (criaturaSeleccionada != null && enemigo != null) {
         criaturaSeleccionada.atacar(enemigo);
@@ -666,7 +670,30 @@ private void mostrarEquipo(List<Criatura> equipo) {
     
         actualizarTexto();
     }
+    private void iniciarNuevoCombate() {
+                // Reiniciar el estado del juego
+        criaturaSeleccionada = null;
+        enemigo = null;
+        entrenador1.getEquipo().clear(); // Limpiar el equipo del jugador
+        entrenadorRival.getEquipo().clear(); // Limpiar el equipo del rival
     
+        // Restablecer el texto
+        textArea.setText("¡Selecciona un nuevo equipo para el próximo combate!\n");
+    
+        // Permitir al usuario seleccionar un nuevo equipo
+        seleccionarEquipoInicial();
+    
+        // Crear un nuevo equipo para el rival
+        crearEntrenadorRival();
+    
+        // Actualizar las imágenes y la información de la interfaz
+        actualizarImagenes();
+        actualizarTexto();
+    }
+
+
+
+
     private void seleccionarEquipoInicial() {
         List<Criatura> coleccion = entrenador1.getColeccion();
     
