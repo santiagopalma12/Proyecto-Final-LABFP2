@@ -1,4 +1,8 @@
-public class Criatura {
+import java.io.Serializable;
+
+public class Criatura implements Serializable {
+    private static final long serialVersionUID = 1L; // Agregar un identificador de versión serial (recomendado)
+    
     private String nombre;
     private int salud;
     private int ataque;

@@ -1,8 +1,12 @@
 import javax.swing.JOptionPane;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pokedex {
+
+public class Pokedex implements Serializable {
+    private static final long serialVersionUID = 1L; // Agregar un identificador de versión serial (recomendado)
+    
     private List<Criatura> criaturas;
 
     // Constructor
@@ -34,7 +38,10 @@ public class Pokedex {
         // Mostrar la Pokedex en una ventana emergente
         JOptionPane.showMessageDialog(null, sb.toString(), "Pokedex", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    // Método para obtener la cantidad de criaturas
+    public int getCantidadDeCriaturas() {
+        return criaturas.size();  // Devuelve el tamaño de la lista de criaturas
+    }
     // Método para obtener todas las criaturas
     public List<Criatura> getCriaturas() {
         return criaturas;
