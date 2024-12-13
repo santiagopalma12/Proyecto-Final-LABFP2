@@ -21,10 +21,24 @@ public class JuegoGUI extends JFrame {
     private static final String RUTA_IMAGENES = "Imagenes_pokemones/Imagenes/";
 
     public JuegoGUI() {
+        // Configuración de la ventana
         setTitle("Juego de Criaturas");
-        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        // Obtener el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        // Calcular el tamaño de la ventana como un porcentaje de la pantalla
+        int ancho = (int) (pantalla.width * 1);  // 80% del ancho de la pantalla
+        int alto = (int) (pantalla.height - 50);  // 80% del alto de la pantalla
+        setSize(ancho, alto);
+
+        // Hacer que la ventana sea redimensionable
+        setResizable(true);
+
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null);
 
         // Panel principal dividido en dos áreas
         JPanel panelPrincipal = new JPanel(new GridLayout(1, 2));
@@ -139,7 +153,7 @@ public class JuegoGUI extends JFrame {
 
         if (archivoImagen.exists()) {
             ImageIcon icon = new ImageIcon(rutaVersus);
-            imagenVersus.setIcon(new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+            imagenVersus.setIcon(new ImageIcon(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         } else {
             imagenVersus.setText("VS");
             imagenVersus.setHorizontalAlignment(JLabel.CENTER);
@@ -149,18 +163,23 @@ public class JuegoGUI extends JFrame {
     private void actualizarImagenes() {
         if (criaturaSeleccionada != null) {
             ImageIcon icon = new ImageIcon(criaturaSeleccionada.getRutaImagen());
-            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+            int anchoOriginal = icon.getIconWidth();
+            int altoOriginal = icon.getIconHeight();
+            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
         } else {
             imagenCriaturaSeleccionada.setIcon(null);
         }
-
+    
         if (enemigo != null) {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
-            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+            int anchoOriginal = icon.getIconWidth();
+            int altoOriginal = icon.getIconHeight();
+            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
         } else {
             imagenEnemigo.setIcon(null);
         }
     }
+    
 
     private void actualizarTexto() {
         StringBuilder texto = new StringBuilder();
@@ -318,6 +337,7 @@ private void atacar() {
             // Verificar si puede evolucionar
             if (criaturaSeleccionada.getCombatesGanados() >= 2) { // Por ejemplo, requiere 2 combates ganados
                 evolucionarCriatura(criaturaSeleccionada);
+                actualizarImagenes();
             }
 
             if (entrenadorRival.getEquipo().isEmpty()) {
