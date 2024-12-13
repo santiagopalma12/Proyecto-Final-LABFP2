@@ -44,7 +44,7 @@ Dugtrio,80,70,50,Tierra,Cavar,No evoluciona,0
 Psyduck,100,55,45,Agua,Psiquico,Golduck,1
 Golduck,140,70,60,Agua,Hydro Pump,No evoluciona,0
 Mankey,100,50,40,Lucha,Puño Karate,Primeape,1
-Primeape,130,70,50,Lucha,Golpe Furia,No evoluciona,0
+Primape,130,70,50,Lucha,Golpe Furia,No evoluciona,0
 Growlithe,110,60,50,Fuego,Llamarada,Arcanine,1
 Arcanine,160,90,70,Fuego,Rugido,No evoluciona,0
 Poliwag,90,30,25,Agua,Chorro de Agua,Poliwhirl,1
