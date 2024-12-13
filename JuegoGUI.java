@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.sound.sampled.*;
+
 
 
 @SuppressWarnings("unused")
@@ -30,6 +32,9 @@ public class JuegoGUI extends JFrame {
     private static final String RUTA_IMAGENES = "Imagenes/";
 
 public JuegoGUI() {
+        // Llamar a la función para reproducir el sonido
+        Sonido sonido = new Sonido();
+        sonido.reproducirSonido("Sonidos/sonido.wav"); // Asegúrate de poner la ruta correcta al archivo
         // Configuración de la ventana
         setTitle("Juego de Criaturas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -764,5 +769,7 @@ private void mostrarEquipo(List<Criatura> equipo) {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
+        Sonido sonido = new Sonido();
+        sonido.reproducirSonido("Sonidos/sonido.mp3");
     }
 }

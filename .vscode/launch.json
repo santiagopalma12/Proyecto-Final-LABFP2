@@ -9,6 +9,20 @@
             "name": "MenuPrincipal",
             "request": "launch",
             "mainClass": "MenuPrincipal",
+            "projectName": "Proyecto-Final-LABFP2_a58cd0eb"
+        },
+        {
+            "type": "java",
+            "name": "JuegoGUI",
+            "request": "launch",
+            "mainClass": "JuegoGUI",
+            "projectName": "Proyecto-Final-LABFP2_a58cd0eb"
+        },
+        {
+            "type": "java",
+            "name": "MenuPrincipal",
+            "request": "launch",
+            "mainClass": "MenuPrincipal",
             "projectName": "Proyecto-Final-LABFP2_913715a0"
         },
         {
