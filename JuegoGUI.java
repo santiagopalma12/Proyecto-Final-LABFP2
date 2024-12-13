@@ -18,7 +18,7 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
-    private static final String RUTA_IMAGENES = "Imagenes_pokemones/Imagenes/";
+    private static final String RUTA_IMAGENES = "Imagenes/";
 
     public JuegoGUI() {
         // Configuración de la ventana
@@ -109,14 +109,10 @@ public class JuegoGUI extends JFrame {
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         btnCapturarPokemon.setVisible(true);
 
-       panelBotones.add(btnSeleccionarCriatura);
-        estilizarBoton(btnSeleccionarCriatura);
+        panelBotones.add(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
-        estilizarBoton(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
-        estilizarBoton(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
-        estilizarBoton(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
 
         // Inicialización del juego
@@ -183,14 +179,8 @@ public class JuegoGUI extends JFrame {
             imagenEnemigo.setIcon(null);
         }
     }
-    private void estilizarBoton(JButton boton) {
-        boton.setBackground(new Color(34, 139, 34)); // Verde oscuro
-        boton.setForeground(Color.WHITE);
-        boton.setFont(new Font("Arial", Font.BOLD, 14));
-        boton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        boton.setFocusPainted(false);
-    }
     
+
     private void actualizarTexto() {
         StringBuilder texto = new StringBuilder();
         texto.append("=== Equipo de ").append(entrenador1.getNombre()).append(" ===\n");
@@ -260,20 +250,25 @@ public class JuegoGUI extends JFrame {
     
     private void seleccionarCriatura() {
         if (entrenador1.getEquipo().size() > 0) {
-            String[] nombresCriaturas = new String[entrenador1.getEquipo().size()];
-            for (int i = 0; i < entrenador1.getEquipo().size(); i++) {
-                nombresCriaturas[i] = entrenador1.getEquipo().get(i).getNombre();
-            }
-    
+            actualizarImagenes();
+            // Crear una nueva lista de nombres para evitar duplicados
+            List<String> nombresCriaturas = entrenador1.getEquipo().stream()
+            .map(Criatura::getNombre)
+            .distinct() // Evitar duplicados
+            .collect(Collectors.toList());
+
+            String[] opciones = nombresCriaturas.toArray(new String[0]);
+
             String seleccion = (String) JOptionPane.showInputDialog(
-                    this,
-                    "Selecciona tu criatura:",
-                    "Seleccionar Criatura",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    nombresCriaturas,
-                    nombresCriaturas[0]
-            );
+            this,
+            "Selecciona tu criatura:",
+            "Seleccionar Criatura",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]      
+                 
+        );
     
             if (seleccion != null) {
                 for (Criatura criatura : entrenador1.getEquipo()) {
@@ -287,6 +282,7 @@ public class JuegoGUI extends JFrame {
                             textArea.append("El enemigo seleccionado es: " + enemigo.getNombre() + ".\n");
                         }
                         actualizarTexto();
+                        actualizarImagenes();
                         return;
                     }
                 }
@@ -308,6 +304,7 @@ private void evolucionarCriatura(Criatura criatura) {
             String[] datos = linea.split(",");
             if (datos[0].equalsIgnoreCase(evolucion)) {
                 // Crear la nueva criatura evolucionada
+                String rutaImagenEvolucionada = RUTA_IMAGENES + datos[0] + " delante.png";
                 Criatura evolucionada = new Criatura(
                         datos[0],
                         Integer.parseInt(datos[1]),
@@ -316,18 +313,21 @@ private void evolucionarCriatura(Criatura criatura) {
                         datos[4],
                         datos[5],
                         datos[6],
-                        datos[7]
+                        rutaImagenEvolucionada
                     
                 );
 
                 // Reemplazar la criatura en el equipo
-                entrenador1.getEquipo().remove(criatura); // Eliminar la criatura original
-                entrenador1.getEquipo().add(evolucionada); // Agregar la criatura evolucionada
-
+                entrenador1.getEquipo().remove(criatura); // Eliminar la criatura original   
+                entrenador1.getEquipo().add(evolucionada); // Agregar la criatura evolucionada            
+                
+                criaturaSeleccionada = evolucionada;
                 textArea.append("\n¡" + criatura.getNombre() + " ha evolucionado a " + evolucionada.getNombre() + "!\n");
-                return;
+                actualizarImagenes();
+                actualizarTexto();
+                
             }
-        }
+        }       
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error al cargar la evolución", "Error", JOptionPane.ERROR_MESSAGE);
     }
@@ -348,6 +348,7 @@ private void atacar() {
             if (criaturaSeleccionada.getCombatesGanados() >= 2) { // Por ejemplo, requiere 2 combates ganados
                 evolucionarCriatura(criaturaSeleccionada);
                 actualizarImagenes();
+                actualizarTexto();
             }
 
             if (entrenadorRival.getEquipo().isEmpty()) {
@@ -378,6 +379,7 @@ private void atacar() {
 
                 textArea.append("Elige otro Pokémon para continuar.\n");
                 seleccionarCriatura();
+                actualizarTexto();
             }
         }
 
