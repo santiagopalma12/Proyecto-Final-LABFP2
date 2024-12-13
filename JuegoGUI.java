@@ -171,6 +171,9 @@ public JuegoGUI() {
         btnCapturarPokemon.setVisible(true);
         panelBotones.add(btnVerPokedex);
         estilizarBoton(btnVerPokedex);
+        estilizarBoton(btnGuardarProgreso);
+        estilizarBoton(btnSeleccionarCriatura);
+        estilizarBoton(btnAtacar);
 
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
@@ -228,9 +231,9 @@ public JuegoGUI() {
     }
 
     private void estilizarBoton(JButton boton) {
-        boton.setBackground(new Color(34, 139, 34)); // Verde oscuro
-        boton.setForeground(Color.WHITE);
-        boton.setFont(new Font("Arial", Font.BOLD, 14));
+        boton.setBackground(new Color(169, 169, 169)); // Gris oscuro
+        boton.setForeground(Color.BLACK);
+        boton.setFont(new Font("DialogInput", Font.BOLD, 14));
         boton.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         boton.setFocusPainted(false);
     }
