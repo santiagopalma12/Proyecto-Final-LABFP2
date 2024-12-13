@@ -19,137 +19,170 @@ public class JuegoGUI extends JFrame {
     private JLabel imagenCriaturaSeleccionada;
     private JLabel imagenEnemigo;
     private JLabel imagenVersus;
-
+    private Pokedex pokedex;
+    
     private static final String RUTA_IMAGENES = "Imagenes/";
 
-
-    private Pokedex pokedex;
-    public JuegoGUI() {
-
+public JuegoGUI() {
         // Configuración de la ventana
         setTitle("Juego de Criaturas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
+        
         // Obtener el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int ventanaAncho = getWidth();
+        int ventanaAlto = getHeight();
+
         
         // Calcular el tamaño de la ventana como un porcentaje de la pantalla
         int ancho = (int) (pantalla.width * 1);  // 80% del ancho de la pantalla
         int alto = (int) (pantalla.height - 50);  // 80% del alto de la pantalla
         setSize(ancho, alto);
-
+    
         // Hacer que la ventana sea redimensionable
         setResizable(true);
-
+    
         // Centrar la ventana en la pantalla
-        setLocationRelativeTo(null);
-
+            setLocationRelativeTo(null);
         // Panel principal dividido en dos áreas
         JPanel panelPrincipal = new JPanel(new GridLayout(1, 2));
-
-        // Panel principal dividido en tres áreas
-        JPanel panelImagenes = new JPanel(new BorderLayout());
-
-        // Panel izquierdo (imagen del Pokémon seleccionado y pociones)
-        JPanel panelIzquierdo = new JPanel(new BorderLayout());
+    
+        // Crear el JLayeredPane
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null); // Usar un diseño nulo para posicionar manualmente los componentes
+    
+        // Agregar el fondo
+        ImageIcon fondoIcon = new ImageIcon(RUTA_IMAGENES + "fondo.png");
+        JLabel fondoLabel = new JLabel(fondoIcon);
+        fondoLabel.setBounds(0, 0, getWidth(), getHeight());
+        layeredPane.add(fondoLabel, Integer.valueOf(0)); // Capa más baja
+    
+            // Panel izquierdo (imagen del Pokémon seleccionado y pociones)
+        TransparentPanel panelIzquierdo = new TransparentPanel();
+        panelIzquierdo.setLayout(new BorderLayout());
         imagenCriaturaSeleccionada = new JLabel();
         imagenCriaturaSeleccionada.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        imagenCriaturaSeleccionada.setOpaque(false); // Hacer que el fondo sea transparente
+    
+        int anchoImagen = (int) (ventanaAncho * 0.2); // 20% del ancho
+        int altoImagen = (int) (ventanaAlto * 0.3);  // 30% del alto
+        imagenCriaturaSeleccionada.setBounds((int)(ventanaAncho * 0.1), (int)(ventanaAlto * 0.3), anchoImagen, altoImagen);
         panelIzquierdo.add(imagenCriaturaSeleccionada, BorderLayout.CENTER);
-
-        JPanel panelPocionesIzquierdo = new JPanel(new GridLayout(1, 4, 10, 10));
+    
+        TransparentPanel panelPocionesIzquierdo = new TransparentPanel();
+        panelPocionesIzquierdo.setLayout(new GridLayout(1, 4, 10, 10));
         pocionesJugador = new JButton[4];
         for (int i = 0; i < 4; i++) {
             pocionesJugador[i] = crearBotonPocion(i, true);
             panelPocionesIzquierdo.add(pocionesJugador[i]);
         }
+    
+        // Mover las pociones hacia abajo ajustando el BorderLayout
         panelIzquierdo.add(panelPocionesIzquierdo, BorderLayout.SOUTH);
-
-        // Panel central (imagen "Versus")
-        JPanel panelCentral = new JPanel(new BorderLayout());
-        imagenVersus = new JLabel();
+        panelIzquierdo.setBounds(20, 400, 200, 300); // Ajusta la posición Y para todo el panel izquierdo
+    
+        layeredPane.add(panelIzquierdo, Integer.valueOf(1)); // Capa superior
+    
+        
+    
+        // Inicializar imagenVersus antes de cargar la imagen
+        imagenVersus = new JLabel(); 
         imagenVersus.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
-        cargarImagenVersus();
-        panelCentral.add(imagenVersus, BorderLayout.CENTER);
-
-        // Panel derecho (imagen del Pokémon enemigo y pociones)
-        JPanel panelDerecho = new JPanel(new BorderLayout());
+        cargarImagenVersus(); // Ahora este método tiene un objeto inicializado para trabajar
+    
+        // Configurar posición y agregar imagenVersus al JLayeredPane
+        int anchoDisponible = getWidth() / 2; // La mitad izquierda
+        int centroX = anchoDisponible / 2 - 50; // Ajustar horizontalmente dentro de esa mitad
+        int centroY = getHeight() / 2 - 50; // Centrar verticalmente
+        imagenVersus.setBounds(centroX-120, centroY, 400, 300);
+        layeredPane.add(imagenVersus, Integer.valueOf(2)); // Capa superior
+    
+            // Panel derecho (imagen del Pokémon enemigo y pociones)
+        TransparentPanel panelDerecho = new TransparentPanel();
+        panelDerecho.setLayout(new BorderLayout());
         imagenEnemigo = new JLabel();
         imagenEnemigo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar la imagen
+        imagenEnemigo.setOpaque(false); // Hacer que el fondo sea transparente
+        imagenEnemigo.setIcon(null);
+    
+        // Mover la imagen más abajo ajustando el setBounds
+        imagenEnemigo.setBounds(0, 400, 200, 300); // Cambiar la posición Y
         panelDerecho.add(imagenEnemigo, BorderLayout.CENTER);
-
-        JPanel panelPocionesDerecho = new JPanel(new GridLayout(1, 4, 10, 10));
+    
+        TransparentPanel panelPocionesDerecho = new TransparentPanel();
+        panelPocionesDerecho.setLayout(new GridLayout(1, 4, 10, 10));
         pocionesEnemigo = new JButton[4];
         for (int i = 0; i < 4; i++) {
             pocionesEnemigo[i] = crearBotonPocion(i, false);
             panelPocionesDerecho.add(pocionesEnemigo[i]);
         }
+    
+        // Mover las pociones hacia abajo ajustando el BorderLayout
         panelDerecho.add(panelPocionesDerecho, BorderLayout.SOUTH);
-
-        // Agregar los paneles al panel principal
-        panelImagenes.add(panelIzquierdo, BorderLayout.WEST);
-        panelImagenes.add(panelCentral, BorderLayout.CENTER);
-        panelImagenes.add(panelDerecho, BorderLayout.EAST);
-
-        // Agregar el panel principal al JFrame
-        add(panelImagenes, BorderLayout.CENTER);
-
+        panelDerecho.setBounds(anchoDisponible - 230, 400, 200, 300); // Ajustar la posición Y para todo el panel derecho
+    
+        layeredPane.add(panelDerecho, Integer.valueOf(1)); // Capa superior
+    
+    
+    
+        // Agregar el layeredPane al JFrame
+        add(layeredPane, BorderLayout.CENTER);
+    
         // Panel derecho para el área de texto
         JPanel panelTexto = new JPanel(new BorderLayout());
         textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         panelTexto.add(scrollPane, BorderLayout.CENTER);
-
+    
         // Agregar ambos paneles al principal
-        panelPrincipal.add(panelImagenes);
+        panelPrincipal.add(layeredPane);
         panelPrincipal.add(panelTexto);
         add(panelPrincipal, BorderLayout.CENTER);
-
+        add(panelPrincipal, BorderLayout.CENTER);
+    
         // Panel inferior con botones de acción
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
         btnAtacar = new JButton("Atacar");
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
-        panelBotones.add(btnSeleccionarCriatura);
-        // Botón para abrir la Pokédex
         JButton btnVerPokedex = new JButton("Ver Pokédex");
+        
         btnVerPokedex.addActionListener(e -> mostrarPokedex());
         panelBotones.add(btnSeleccionarCriatura);
+        // Botón para abrir la Pokédex
+        panelBotones.add(btnSeleccionarCriatura);
         btnCapturarPokemon.setVisible(true);
-        estilizarBoton(btnSeleccionarCriatura);
-        estilizarBoton(btnAtacar);
-        estilizarBoton(btnSeleccionarCriatura);
+        panelBotones.add(btnVerPokedex);
+        estilizarBoton(btnVerPokedex);
+    
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnGuardarProgreso);
-
-
-        estilizarBoton(btnCapturarPokemon);
-        panelBotones.add(btnVerPokedex);
-        estilizarBoton(btnVerPokedex);
-
         add(panelBotones, BorderLayout.SOUTH);
-
+    
         // Inicialización de entrenadores y Pokédex
         entrenador1 = new Entrenador("Ash");
         entrenadorRival = new Entrenador("Rival");
         pokedex = new Pokedex();
-
+    
         // Cargar criaturas desde archivo y preparar el juego
         cargarCriaturasDesdeArchivo("criaturas.txt");
         seleccionarEquipoInicial();
         crearEntrenadorRival();
-
+    
         btnSeleccionarCriatura.addActionListener(e -> seleccionarCriatura());
         btnAtacar.addActionListener(e -> atacar());
         btnGuardarProgreso.addActionListener(e -> guardarProgreso());
         btnCapturarPokemon.addActionListener(e -> capturarPokemon());
-
+    
         actualizarTexto();
         actualizarImagenes();
+        setVisible(true);
     }
+
 
     private JButton crearBotonPocion(int index, boolean esJugador) {
         JButton boton = new JButton(new ImageIcon(RUTA_IMAGENES + "pocion.png"));
@@ -190,20 +223,21 @@ public class JuegoGUI extends JFrame {
     private void actualizarImagenes() {
         if (criaturaSeleccionada != null) {
             ImageIcon icon = new ImageIcon(criaturaSeleccionada.getRutaImagen());
-            int anchoOriginal = icon.getIconWidth();
-            int altoOriginal = icon.getIconHeight();
-            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } 
-        else
+            int ancho = imagenCriaturaSeleccionada.getWidth(); // Usa el tamaño actual del JLabel
+            int alto = imagenCriaturaSeleccionada.getHeight();
+            imagenCriaturaSeleccionada.setIcon(new ImageIcon(icon.getImage().getScaledInstance(ancho*2, alto*2, Image.SCALE_SMOOTH)));
+        } else {
             imagenCriaturaSeleccionada.setIcon(null);
+        }
+    
         if (enemigo != null) {
             ImageIcon icon = new ImageIcon(enemigo.getRutaImagen());
-            int anchoOriginal = icon.getIconWidth();
-            int altoOriginal = icon.getIconHeight();
-            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(anchoOriginal * 3, altoOriginal * 3, Image.SCALE_SMOOTH)));
-        } 
-        else
+            int ancho = imagenEnemigo.getWidth(); // Usa el tamaño actual del JLabel
+            int alto = imagenEnemigo.getHeight();
+            imagenEnemigo.setIcon(new ImageIcon(icon.getImage().getScaledInstance(ancho*2, alto*2, Image.SCALE_SMOOTH)));
+        } else {
             imagenEnemigo.setIcon(null);
+        }
     }
     
 
@@ -469,9 +503,7 @@ public void seleccionarYGenerarEquipos() {
     mostrarEquipo(entrenador1.getEquipo());
     System.out.println("\nEquipo enemigo:");
     mostrarEquipo(entrenadorRival.getEquipo());
-}
-
-private void mostrarPokedex() {
+}private void mostrarPokedex() {
     if (pokedex != null && !pokedex.getCriaturas().isEmpty())
         // Llamar a la GUI de PokedexSwing
         SwingUtilities.invokeLater(() -> new PokedexSwing(pokedex));
@@ -642,6 +674,5 @@ private void mostrarEquipo(List<Criatura> equipo) {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
-        
     }
 }
