@@ -637,5 +637,6 @@ private void mostrarEquipo(List<Criatura> equipo) {
      
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new JuegoGUI().setVisible(true));
+        
     }
 }
