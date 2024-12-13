@@ -22,9 +22,21 @@ public class JuegoGUI extends JFrame {
 
     public JuegoGUI() {
         setTitle("Juego de Criaturas");
-        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        // Obtener el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calcular el tamaño de la ventana como un porcentaje de la pantalla
+        int ancho = (int) (pantalla.width * 1);  // 80% del ancho de la pantalla
+        int alto = (int) (pantalla.height - 50);  // 80% del alto de la pantalla
+        setSize(ancho, alto);
+
+        // Hacer que la ventana sea redimensionable
+        setResizable(true);
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null);
+    
         // Panel principal dividido en dos áreas
         JPanel panelPrincipal = new JPanel(new GridLayout(1, 2));
 
