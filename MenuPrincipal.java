@@ -115,7 +115,6 @@ public class MenuPrincipal extends JFrame {
             // Si la criatura activa ha sido derrotada, termina la batalla
             if (entrenador.getCriaturaActiva().getSalud() <= 0) {
                 System.out.println(entrenador.getCriaturaActiva().getNombre() + " ha sido derrotada.");
-                terminarBatalla();
             } else {
                 // Cambiar de turno al rival
                 entrenador.setEsTurnoDelEntrenador(!entrenador.isEsTurnoDelEntrenador());
@@ -123,12 +122,6 @@ public class MenuPrincipal extends JFrame {
         } else {
             System.out.println("La batalla no está en curso.");
         }
-    }
-    public void terminarBatalla() {
-        System.out.println("La batalla ha terminado.");
-        // Lógica para finalizar la batalla, podrías mostrar un mensaje de "Fin de la batalla" o reiniciar la pantalla
-        JOptionPane.showMessageDialog(this, "La batalla ha terminado.", "Fin de la Batalla", JOptionPane.INFORMATION_MESSAGE);
-        // Aquí podrías llevar al jugador a un menú o resetear el estado de la batalla.
     }
 
     public static void main(String[] args) {
