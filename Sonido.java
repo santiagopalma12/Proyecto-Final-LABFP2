@@ -1,8 +1,9 @@
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Sonido {
+public class Sonido implements Serializable {
 
     public void reproducirSonido(String rutaArchivo) {
         try {

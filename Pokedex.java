@@ -1,8 +1,11 @@
 import javax.swing.JOptionPane;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pokedex {
+public class Pokedex implements Serializable {
+    private static final long serialVersionUID = 1L;
     private List<Criatura> criaturas;
 
     // Constructor
