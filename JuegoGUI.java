@@ -128,20 +128,34 @@ public JuegoGUI() {
     
         // Agregar el layeredPane al JFrame
         add(layeredPane, BorderLayout.CENTER);
-    
-        // Panel derecho para el área de texto
-        JPanel panelTexto = new JPanel(new BorderLayout());
+    // Panel derecho para el área de texto con fondo negro
+        JPanel panelTexto = new JPanel();
+        panelTexto.setLayout(new BorderLayout());
+        panelTexto.setBackground(Color.darkGray); // Fondo negro
+
+        // Área de texto estilizada
         textArea = new JTextArea();
         textArea.setEditable(false);
+        textArea.setFont(new Font("DialogInput", Font.BOLD, 22)); // Fuente en negrita
+        textArea.setForeground(Color.WHITE); // Texto verde
+        textArea.setOpaque(false); // Hacer que el área de texto sea transparente
+        textArea.setLineWrap(true); // Ajuste de línea
+        textArea.setWrapStyleWord(true); // Ajuste de palabra
+
+        // ScrollPane con área de texto
         JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        // Agregar el ScrollPane al panelTexto
         panelTexto.add(scrollPane, BorderLayout.CENTER);
-    
+
         // Agregar ambos paneles al principal
         panelPrincipal.add(layeredPane);
         panelPrincipal.add(panelTexto);
         add(panelPrincipal, BorderLayout.CENTER);
-        add(panelPrincipal, BorderLayout.CENTER);
-    
+
         // Panel inferior con botones de acción
         JPanel panelBotones = new JPanel();
         btnSeleccionarCriatura = new JButton("Seleccionar Criatura");
@@ -149,7 +163,7 @@ public JuegoGUI() {
         btnGuardarProgreso = new JButton("Guardar Progreso");
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         JButton btnVerPokedex = new JButton("Ver Pokédex");
-        
+
         btnVerPokedex.addActionListener(e -> mostrarPokedex());
         panelBotones.add(btnSeleccionarCriatura);
         // Botón para abrir la Pokédex
@@ -157,11 +171,12 @@ public JuegoGUI() {
         btnCapturarPokemon.setVisible(true);
         panelBotones.add(btnVerPokedex);
         estilizarBoton(btnVerPokedex);
-    
+
         panelBotones.add(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
         panelBotones.add(btnGuardarProgreso);
         add(panelBotones, BorderLayout.SOUTH);
+
     
         // Inicialización de entrenadores y Pokédex
         entrenador1 = new Entrenador("Ash");
@@ -205,7 +220,7 @@ public JuegoGUI() {
 
         if (archivoImagen.exists()) {
             ImageIcon icon = new ImageIcon(rutaVersus);
-            imagenVersus.setIcon(new ImageIcon(icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            imagenVersus.setIcon(new ImageIcon(icon.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH)));
         } else {
             imagenVersus.setText("VS");
             imagenVersus.setHorizontalAlignment(JLabel.CENTER);
