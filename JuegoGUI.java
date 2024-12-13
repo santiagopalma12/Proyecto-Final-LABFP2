@@ -109,10 +109,14 @@ public class JuegoGUI extends JFrame {
         btnCapturarPokemon = new JButton("Capturar Pokémon");
         btnCapturarPokemon.setVisible(true);
 
-        panelBotones.add(btnSeleccionarCriatura);
+       panelBotones.add(btnSeleccionarCriatura);
+        estilizarBoton(btnSeleccionarCriatura);
         panelBotones.add(btnAtacar);
+        estilizarBoton(btnAtacar);
         panelBotones.add(btnGuardarProgreso);
+        estilizarBoton(btnGuardarProgreso);
         panelBotones.add(btnCapturarPokemon);
+        estilizarBoton(btnCapturarPokemon);
         add(panelBotones, BorderLayout.SOUTH);
 
         // Inicialización del juego
